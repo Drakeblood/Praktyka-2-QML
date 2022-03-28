@@ -17,8 +17,10 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 set(PROJECT_SOURCES
-        main.cpp
-        qml.qrc
+        src/main.cpp
+        qml/qml.qrc
+        include/PImageStreamer.h src/PImageStreamer.cpp
+        include/PImageProvider.h src/PImageProvider.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
