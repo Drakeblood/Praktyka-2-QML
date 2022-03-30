@@ -1,4 +1,5 @@
 #include "include/PImageStreamer.h"
+#include "QDebug"
 
 PImageStreamer::PImageStreamer(QObject *parent)
     : QObject{parent}
@@ -6,16 +7,29 @@ PImageStreamer::PImageStreamer(QObject *parent)
 
 }
 
-void PImageStreamer::LoadImage()
+void PImageStreamer::loadImage()
 {
-    /*QString Imagename = QFileDialog::getOpenFileName(
-                    this,
-                    tr("Open Images"),
-                    "C://",
-                    tr("Tiff Files (*.tif);; Raw file (*.raw)"));
+    cvImageInstance = cv::imread(imageLocationNative.toStdString());
+    qImageInstanceNative = QImage(cvImageInstance.data, cvImageInstance.cols, cvImageInstance.rows, cvImageInstance.step, QImage::Format_A2BGR30_Premultiplied);
+}
 
-     if ( Imagename.isNull())
-        {
-             QMessageBox::warning(this,"Error!","Image not valid!");
-        }*/
+QImage PImageStreamer::qImageInstance() const
+{
+    qDebug() << "TESTTSTSTSTST";
+    return qImageInstanceNative;
+}
+
+QString PImageStreamer::imageLocation() const
+{
+    return imageLocationNative;
+}
+
+void PImageStreamer::setImageLocation(const QString newImageLocation)
+{
+    if(imageLocationNative != newImageLocation)
+    {
+        imageLocationNative = newImageLocation;
+        loadImage();
+        emit imageLocationChanged();
+    }
 }

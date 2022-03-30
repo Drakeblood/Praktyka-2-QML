@@ -21,6 +21,9 @@ set(PROJECT_SOURCES
         qml/qml.qrc
         include/PImageStreamer.h src/PImageStreamer.cpp
         include/PImageProvider.h src/PImageProvider.cpp
+        include/PImageTransformationList.h src/PImageTransformationList.cpp
+        include/PImageTransformationModel.h src/PImageTransformationModel.cpp
+        include/PImageTransform.h src/PImageTransform.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -50,6 +53,8 @@ target_compile_definitions(Praktyka-2-QML
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(Praktyka-2-QML
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+
+target_link_libraries(Praktyka-2-QML PRIVATE ${OpenCV_LIBS})
 
 set_target_properties(Praktyka-2-QML PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

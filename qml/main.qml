@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.3
+import QtQuick.Layouts 1.3
 
 Window {
     id: rootWindow
@@ -9,6 +10,17 @@ Window {
     height: 600
     visible: true
     title: qsTr("Hello World")
+
+    Window {
+        id: imageTransformationListWindow
+        width: 400
+        height: 300
+        visible: false
+
+        //PImageTransformationList {
+
+        //}
+    }
 
     Row {
         id: rowContainer
@@ -45,10 +57,16 @@ Window {
                 onAccepted: {
                     console.log("You chose: " + fileUrl)
                     loadedImage.source = fileUrl
+                    //loadedImageStreamer.imageLocation = fileUrl
                 }
                 onRejected: {
                     console.log("Canceled")
                 }
+            }
+
+            Connections {
+                //target: imageProvider
+
             }
         }
 
@@ -124,7 +142,12 @@ Window {
                 width: parent.width
                 height: parent.height / 4
                 anchors.bottom: parent.bottom
+                source: "image://imageProvider/MyImage"
             }
+
+            //PImageTransformationList {
+            //    anchors.centerIn: parent
+            //}
         }
     }
 }

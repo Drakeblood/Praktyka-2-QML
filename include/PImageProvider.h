@@ -7,15 +7,13 @@
 
 class PImageProvider : public QQuickImageProvider
 {
-public:
-    int Width;
-    int Height;
-
 private:
-    PImageStreamer ImageStreamer;
+    //PImageStreamer imageStreamer;
+
 
 public:
     PImageProvider();
+    ~PImageProvider();
 
     virtual QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
 

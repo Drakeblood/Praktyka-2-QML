@@ -1,30 +1,47 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
+#include "include/PImageStreamer.h"
 #include "include/PImageProvider.h"
+#include "include/PImageTransformationModel.h"
+#include "include/PImageTransformationList.h"
 
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-    QGuiApplication App(argc, argv);
+    QGuiApplication app(argc, argv);
 
-    App.setOrganizationName("Some Company");
-    App.setOrganizationDomain("somecompany.com");
-    App.setApplicationName("Application");
+    app.setOrganizationName("Some Company");
+    app.setOrganizationDomain("somecompany.com");
+    app.setApplicationName("Application");
 
-    QQmlApplicationEngine Engine;
+    //qmlRegisterType<PImageStreamer>("Praktyka.ImageStreamer", 1, 0, "ImageStreamer");
+    qmlRegisterType<PImageTransformationModel>("Praktyka.ImageTransformation", 1, 0, "ImageTransformationModel");
 
-    Engine.addImageProvider(QLatin1String("loadedImage"), new PImageProvider);
+    qmlRegisterUncreatableType<PImageTransformationList>("Praktyka.ImageTransformation", 1, 0, "ImageTransformationList",
+    QStringLiteral("ToDoList should not be created in QML"));
+
+    QQmlApplicationEngine engine;
+
+    PImageTransformationList imageTransformationList;
+    engine.rootContext()->setContextProperty(QStringLiteral("imageTransformationList"), &imageTransformationList);
+
+    PImageStreamer imageStreamer;
+    engine.rootContext()->setContextProperty(QStringLiteral("imageStreamer"), &imageStreamer);
+
+    PImageProvider *imageProvider = new PImageProvider;
+    engine.addImageProvider(QStringLiteral("imageProvider"), imageProvider);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&Engine, &QQmlApplicationEngine::objectCreated,
-                     &App, [url](QObject *obj, const QUrl &objUrl) {
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    Engine.load(url);
+    engine.load(url);
 
-    return App.exec();
+    return app.exec();
 }
