@@ -1,4 +1,5 @@
 #include "include/PImageStreamer.h"
+
 #include "QDebug"
 
 PImageStreamer::PImageStreamer(QObject *parent)
@@ -7,29 +8,39 @@ PImageStreamer::PImageStreamer(QObject *parent)
 
 }
 
-void PImageStreamer::loadImage()
+void PImageStreamer::loadImage(const QString& imagePath)
 {
-    cvImageInstance = cv::imread(imageLocationNative.toStdString());
-    qImageInstanceNative = QImage(cvImageInstance.data, cvImageInstance.cols, cvImageInstance.rows, cvImageInstance.step, QImage::Format_A2BGR30_Premultiplied);
-}
+    std::string stdStrPath = imagePath.toStdString();
+    stdStrPath = stdStrPath.substr(8);
 
-QImage PImageStreamer::qImageInstance() const
-{
-    qDebug() << "TESTTSTSTSTST";
-    return qImageInstanceNative;
-}
+    cvImageInstance = cv::imread(stdStrPath);
 
-QString PImageStreamer::imageLocation() const
-{
-    return imageLocationNative;
-}
-
-void PImageStreamer::setImageLocation(const QString newImageLocation)
-{
-    if(imageLocationNative != newImageLocation)
+    if(cvImageInstance.empty())
     {
-        imageLocationNative = newImageLocation;
-        loadImage();
-        emit imageLocationChanged();
+        qDebug() << "Load image failed.";
     }
+}
+
+void PImageStreamer::convertCVMatToQImage()
+{
+    if(!cvImageInstance.empty())
+    {
+        qImageInstance = QImage(
+                    (uchar*) cvImageInstance.data,
+                    cvImageInstance.cols,
+                    cvImageInstance.rows,
+                    cvImageInstance.step,
+                    QImage::Format_RGB888
+                    ).rgbSwapped();
+    }
+    else
+    {
+        qDebug() << "Convert image failed.";
+    }
+}
+
+QImage* PImageStreamer::getQImage()
+{
+    convertCVMatToQImage();
+    return &qImageInstance;
 }

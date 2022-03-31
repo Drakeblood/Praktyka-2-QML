@@ -3,17 +3,16 @@
 
 #include <QQuickImageProvider>
 
-#include "include/PImageStreamer.h"
+class PImageStreamer;
 
 class PImageProvider : public QQuickImageProvider
 {
-private:
-    //PImageStreamer imageStreamer;
-
+public:
+    PImageStreamer *imageStreamer;
 
 public:
     PImageProvider();
-    ~PImageProvider();
+    virtual ~PImageProvider();
 
     virtual QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
 

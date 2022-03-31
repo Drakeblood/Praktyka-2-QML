@@ -11,31 +11,21 @@
 class PImageStreamer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString imageLocation READ imageLocation WRITE setImageLocation NOTIFY imageLocationChanged)
-    Q_PROPERTY(QImage qImageInstance READ qImageInstance NOTIFY qImageInstanceChanged)
-
-public:
-    QString imageLocationNative;
-    QImage qImageInstanceNative;
 
 private:
     cv::Mat cvImageInstance;
+    QImage qImageInstance;
 
 public:
     explicit PImageStreamer(QObject *parent = nullptr);
 
-    void loadImage();
+    Q_INVOKABLE
+    void loadImage(const QString& imagePath);
 
+    void convertCVMatToQImage();
 
-signals:
-    void imageLocationChanged();
-    void qImageInstanceChanged();
+    QImage* getQImage();
 
-private:
-    QString imageLocation() const;
-    void setImageLocation(const QString newImageLocation);
-
-    QImage qImageInstance() const;
 
 };
 

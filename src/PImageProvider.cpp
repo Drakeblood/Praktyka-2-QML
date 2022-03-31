@@ -1,20 +1,25 @@
 #include "include/PImageProvider.h"
+#include "include/PImageStreamer.h"
+
 #include "QDebug"
+
+#include "opencv2/core.hpp"
 
 PImageProvider::PImageProvider()
     : QQuickImageProvider(QQuickImageProvider::Image)
+    , imageStreamer(new PImageStreamer)
 {
 
 }
 
 PImageProvider::~PImageProvider()
 {
-    qDebug() << "Image Provider destroyed.";
+    delete imageStreamer;
 }
 
 QImage PImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    QImage image;
-    image.load("C:/Users/PC/Desktop/moodboard.png");
-    return image;
+    qDebug() << "requestImage called.";
+
+    return *(imageStreamer->getQImage());
 }

@@ -55,9 +55,18 @@ Window {
                 folder: shortcuts.desktop
                 nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
                 onAccepted: {
-                    console.log("You chose: " + fileUrl)
-                    loadedImage.source = fileUrl
-                    //loadedImageStreamer.imageLocation = fileUrl
+                    if(loadedImage.source != fileUrl)
+                    {
+                        console.log("You chose: " + fileUrl + " - Previous: " + loadedImage.source)
+
+                        loadedImage.source = fileUrl
+                        imageStreamer.loadImage(fileUrl)
+                        livePreviewImage.source = "image://imageProvider/" + fileUrl
+                    }
+                    else
+                    {
+                        console.log("Image has been already loaded")
+                    }
                 }
                 onRejected: {
                     console.log("Canceled")
@@ -142,7 +151,6 @@ Window {
                 width: parent.width
                 height: parent.height / 4
                 anchors.bottom: parent.bottom
-                source: "image://imageProvider/MyImage"
             }
 
             //PImageTransformationList {

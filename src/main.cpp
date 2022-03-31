@@ -1,11 +1,11 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-
 #include "include/PImageStreamer.h"
 #include "include/PImageProvider.h"
 #include "include/PImageTransformationModel.h"
 #include "include/PImageTransformationList.h"
+
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
@@ -29,11 +29,9 @@ int main(int argc, char *argv[])
     PImageTransformationList imageTransformationList;
     engine.rootContext()->setContextProperty(QStringLiteral("imageTransformationList"), &imageTransformationList);
 
-    PImageStreamer imageStreamer;
-    engine.rootContext()->setContextProperty(QStringLiteral("imageStreamer"), &imageStreamer);
-
     PImageProvider *imageProvider = new PImageProvider;
     engine.addImageProvider(QStringLiteral("imageProvider"), imageProvider);
+    engine.rootContext()->setContextProperty(QStringLiteral("imageStreamer"), imageProvider->imageStreamer);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
