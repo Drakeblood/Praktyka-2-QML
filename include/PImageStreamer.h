@@ -13,18 +13,20 @@ class PImageStreamer : public QObject
     Q_OBJECT
 
 private:
-    cv::Mat cvImageInstance;
-    QImage qImageInstance;
+    int imageCount;
+
+    QVector<cv::Mat> cvImageInstances;
+    QVector<QImage> qImageInstances;
 
 public:
     explicit PImageStreamer(QObject *parent = nullptr);
 
     Q_INVOKABLE
-    void loadImage(const QString& imagePath);
+    void loadImage(const QString& imagePath, int index);
 
-    void convertCVMatToQImage();
+    void convertCVMatToQImage(int index);
 
-    QImage* getQImage();
+    QImage* getQImage(int index);
 
 
 };

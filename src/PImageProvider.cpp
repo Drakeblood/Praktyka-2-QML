@@ -19,7 +19,13 @@ PImageProvider::~PImageProvider()
 
 QImage PImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    qDebug() << "requestImage called.";
+    int index = id[0].unicode() - 48;
+    qDebug() << "requestImage called." << index;
 
-    return *(imageStreamer->getQImage());
+    QImage *qImage = imageStreamer->getQImage(index);
+    if(qImage)
+    {
+        return *qImage;
+    }
+    return QImage();
 }
