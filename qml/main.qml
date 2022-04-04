@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.3
 import QtQuick.Layouts 1.3
 
-import Praktyka.ImageTransformation 1.0
+import Praktyka.ImageModifiers 1.0
 
 Window {
     id: rootWindow
@@ -13,15 +13,87 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+    //------------------------Image modyficators list window------------------------
     Window {
-        id: imageTransformationListWindow
+        id: imageModifierListWindow
         width: 400
         height: 300
         visible: false
 
-        //PImageTransformationList {
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 0
 
-        //}
+            Rectangle {
+                color: "lightblue"
+                height: 50
+                Layout.fillWidth: true
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "Image modyficators"
+                }
+            }
+
+            ScrollView {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                ListView {
+                    id: imageModifierListView
+                    model: EditableImageModifierModel {
+                        id: imageModifierModel
+                        list: editableImageModifierList
+                    }
+
+                    delegate: Item {
+                        Rectangle {
+                            height: imageModifierTextLabel.height * 2
+                            width: imageModifierListView.width
+                            color: "white"
+
+                            Text {
+                                id: imageModifierTextLabel
+                                anchors.centerIn: parent
+                                text: model.text
+                            }
+
+                            // Bottom line border
+                            Rectangle {
+                                anchors {
+                                    left: parent.left
+                                    right: parent.right
+                                    bottom: parent.bottom
+                                }
+                                height: 1
+                                color: "lightgrey"
+                            }
+                        }
+                    }
+                }
+            }
+
+            RowLayout {
+
+                Button {
+                    text: qsTr("-")
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    text: qsTr("+")
+                    onClicked: {
+                        editableImageModifierList.appendItem()
+                    }
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    text: qsTr("Duplicate")
+                    Layout.fillWidth: true
+                }
+            }
+        }
     }
 
     Row {
@@ -84,7 +156,7 @@ Window {
 
             }
         }
-        // image modyficators list start
+        //------------------------Chosen image modyficators list------------------------
         Item {
             id: mainContent
             width: parent.width / 3
@@ -101,7 +173,7 @@ Window {
 
                     Text {
                         anchors.centerIn: parent
-                        text: "A fake toolbar"
+                        text: "Image modyficators"
                     }
                 }
 
@@ -110,20 +182,20 @@ Window {
                     Layout.fillHeight: true
 
                     ListView {
-                        id: listView
-                        model: ImageTransformationModel {
-                            id: myModel
-                            list: imageTransformationList
+                        id: editableImageModifierListView
+                        model: EditableImageModifierModel {
+                            id: editableImageModifierModel
+                            list: editableImageModifierList
                         }
 
-                        delegate: DraggableItem {
+                        delegate: PDraggableItem {
                             Rectangle {
-                                height: textLabel.height * 2
-                                width: listView.width
+                                height: editableImageModifierTextLabel.height * 2
+                                width: editableImageModifierListView.width
                                 color: "white"
 
                                 Text {
-                                    id: textLabel
+                                    id: editableImageModifierTextLabel
                                     anchors.centerIn: parent
                                     text: model.text
                                 }
@@ -144,7 +216,7 @@ Window {
 
                             onMoveItemRequested: {
                                 console.log("onMoveItemRequested: " + from + " -> " + to)
-                                myModel.move(from, to)
+                                editableImageModifierModel.move(from, to)
                             }
                         }
                     }
@@ -160,8 +232,7 @@ Window {
                     Button {
                         text: qsTr("+")
                         onClicked: {
-                            //imageTransformationListWindow.visible = true
-                            imageTransformationList.appendItem()
+                            imageModifierListWindow.visible = true
                         }
                         Layout.fillWidth: true
                     }
@@ -173,8 +244,8 @@ Window {
                 }
             }
         }
-        // image modyficators list end
 
+        //------------------------Live preview images------------------------
         Rectangle {
             color: "yellow";
             width: parent.width / 3

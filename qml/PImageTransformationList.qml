@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import Praktyka.ImageTransformation 1.0
+import Praktyka.ImageModifiers 1.0
 
 ColumnLayout {
     Frame {
@@ -52,7 +52,7 @@ ColumnLayout {
         Button {
             text: qsTr("+")
             onClicked: {
-                //imageTransformationListWindow.visible = true
+                imageTransformationListWindow.visible = true
                 imageTransformationList.appendItem()
             }
             Layout.fillWidth: true

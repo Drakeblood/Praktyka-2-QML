@@ -87,13 +87,13 @@ Item {
         }
         height: contentItem.height
         sourceComponent: Component {
-            DraggableItemDropArea {
+            PDraggableItemDropArea {
                 dropIndex: 0
             }
         }
     }
 
-    DraggableItemDropArea {
+    PDraggableItemDropArea {
         anchors {
             left: parent.left
             right: parent.right

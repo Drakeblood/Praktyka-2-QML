@@ -1,9 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>PListItem.qml</file>
-        <file>PImageTransformationList.qml</file>
-        <file>DraggableItem.qml</file>
-        <file>DraggableItemDropArea.qml</file>
+        <file>PDraggableItem.qml</file>
+        <file>PDraggableItemDropArea.qml</file>
     </qresource>
 </RCC>

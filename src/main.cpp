@@ -1,7 +1,7 @@
 #include "include/PImageStreamer.h"
 #include "include/PImageProvider.h"
-#include "include/PImageTransformationModel.h"
-#include "include/PImageTransformationList.h"
+#include "include/PEditableImageModifierModel.h"
+#include "include/PEditableImageModifierList.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -19,15 +19,15 @@ int main(int argc, char *argv[])
     app.setApplicationName("Application");
 
     //qmlRegisterType<PImageStreamer>("Praktyka.ImageStreamer", 1, 0, "ImageStreamer");
-    qmlRegisterType<PImageTransformationModel>("Praktyka.ImageTransformation", 1, 0, "ImageTransformationModel");
+    qmlRegisterType<PEditableImageModifierModel>("Praktyka.ImageModifiers", 1, 0, "EditableImageModifierModel");
 
-    qmlRegisterUncreatableType<PImageTransformationList>("Praktyka.ImageTransformation", 1, 0, "ImageTransformationList",
+    qmlRegisterUncreatableType<PEditableImageModifierList>("Praktyka.ImageModifiers", 1, 0, "EditableImageModifierList",
     QStringLiteral("ToDoList should not be created in QML"));
 
     QQmlApplicationEngine engine;
 
-    PImageTransformationList imageTransformationList;
-    engine.rootContext()->setContextProperty(QStringLiteral("imageTransformationList"), &imageTransformationList);
+    PEditableImageModifierList editableImageModifierList;
+    engine.rootContext()->setContextProperty(QStringLiteral("editableImageModifierList"), &editableImageModifierList);
 
     PImageProvider *imageProvider = new PImageProvider;
     engine.addImageProvider(QStringLiteral("imageProvider"), imageProvider);

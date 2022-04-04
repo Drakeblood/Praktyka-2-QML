@@ -21,11 +21,13 @@ set(PROJECT_SOURCES
         qml/qml.qrc
         include/PImageStreamer.h src/PImageStreamer.cpp
         include/PImageProvider.h src/PImageProvider.cpp
-        include/PImageTransformationList.h src/PImageTransformationList.cpp
-        include/PImageTransformationModel.h src/PImageTransformationModel.cpp
-        include/ImageTransforms/PImageTransformBase.h src/ImageTransforms/PImageTransformBase.cpp
-        include/ImageTransforms/PFlipHorizontallyImageTransform.h src/ImageTransforms/PFlipHorizontallyImageTransform.cpp
-        include/ImageTransforms/PRotateImageTransform.h src/ImageTransforms/PRotateImageTransform.cpp
+        include/PEditableImageModifierList.h src/PEditableImageModifierList.cpp
+        include/PEditableImageModifierModel.h src/PEditableImageModifierModel.cpp
+        include/ImageModifiers/PImageModifierBase.h src/ImageModifiers/PImageModifierBase.cpp
+        include/ImageModifiers/PFlipHorizontallyImageModifier.h src/ImageModifiers/PFlipHorizontallyImageModifier.cpp
+        include/ImageModifiers/PRotateImageModifier.h src/ImageModifiers/PRotateImageModifier.cpp
+        include/PImageModifierList.h src/PImageModifierList.cpp
+        include/PImageModifierListModel.h src/PImageModifierListModel.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

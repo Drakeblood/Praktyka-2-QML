@@ -1,20 +1,20 @@
-#ifndef PIMAGETRANSFORMBASE_H
-#define PIMAGETRANSFORMBASE_H
+#ifndef PIMAGEMODIFIERBASE_H
+#define PIMAGEMODIFIERBASE_H
 
 #include <QVariant>
 #include <QStringList>
 
-class PImageTransformBase
+class PImageModifierBase
 {
 protected:
     QStringList paramNames;
 
 public:
-    PImageTransformBase();
+    PImageModifierBase();
 
     virtual void transform(QVariant args...) = 0;
 
     const QStringList& getParamNames() const;
 };
 
-#endif // PIMAGETRANSFORMBASE_H
+#endif // PIMAGEMODIFIERBASE_H

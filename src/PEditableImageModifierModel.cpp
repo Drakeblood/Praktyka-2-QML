@@ -1,14 +1,14 @@
-#include "include/PImageTransformationModel.h"
-#include "include/PImageTransformationList.h"
+#include "include/PEditableImageModifierModel.h"
+#include "include/PEditableImageModifierList.h"
 
-PImageTransformationModel::PImageTransformationModel(QObject *parent)
+PEditableImageModifierModel::PEditableImageModifierModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
 
 }
 
-int PImageTransformationModel::rowCount(const QModelIndex &parent) const
+int PEditableImageModifierModel::rowCount(const QModelIndex &parent) const
 {
     // For list models only the root node (an invalid parent) should return the list's size. For all
     // other (valid) parents, rowCount() should return 0 so that it does not become a tree model.
@@ -20,11 +20,11 @@ int PImageTransformationModel::rowCount(const QModelIndex &parent) const
     return 0;
 }
 
-QVariant PImageTransformationModel::data(const QModelIndex &index, int role) const
+QVariant PEditableImageModifierModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid() && mList)
     {
-        const ImageTranformationOptionItem item = mList->items().at(index.row());
+        const ImageModifierOptionItem item = mList->items().at(index.row());
         switch (role)
         {
         case TextRole:
@@ -34,11 +34,11 @@ QVariant PImageTransformationModel::data(const QModelIndex &index, int role) con
     return QVariant();
 }
 
-bool PImageTransformationModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool PEditableImageModifierModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (mList)
     {
-        ImageTranformationOptionItem item = mList->items().at(index.row());
+        ImageModifierOptionItem item = mList->items().at(index.row());
         switch (role)
         {
         case TextRole:
@@ -54,7 +54,7 @@ bool PImageTransformationModel::setData(const QModelIndex &index, const QVariant
     return false;
 }
 
-Qt::ItemFlags PImageTransformationModel::flags(const QModelIndex &index) const
+Qt::ItemFlags PEditableImageModifierModel::flags(const QModelIndex &index) const
 {
     if (index.isValid())
     {
@@ -63,7 +63,7 @@ Qt::ItemFlags PImageTransformationModel::flags(const QModelIndex &index) const
     return Qt::NoItemFlags;
 }
 
-QHash<int, QByteArray> PImageTransformationModel::roleNames() const
+QHash<int, QByteArray> PEditableImageModifierModel::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[TextRole] = "text";
@@ -71,12 +71,12 @@ QHash<int, QByteArray> PImageTransformationModel::roleNames() const
     return names;
 }
 
-PImageTransformationList* PImageTransformationModel::list() const
+PEditableImageModifierList* PEditableImageModifierModel::list() const
 {
     return mList;
 }
 
-void PImageTransformationModel::setList(PImageTransformationList *list)
+void PEditableImageModifierModel::setList(PEditableImageModifierList *list)
 {
     beginResetModel();
 
@@ -88,18 +88,18 @@ void PImageTransformationModel::setList(PImageTransformationList *list)
     mList = list;
 
     if (mList) {
-        connect(mList, &PImageTransformationList::preItemAppended, this, [=]() {
+        connect(mList, &PEditableImageModifierList::preItemAppended, this, [=]() {
             const int index = mList->items().size();
             beginInsertRows(QModelIndex(), index, index);
         });
-        connect(mList, &PImageTransformationList::postItemAppended, this, [=]() {
+        connect(mList, &PEditableImageModifierList::postItemAppended, this, [=]() {
             endInsertRows();
         });
 
-        connect(mList, &PImageTransformationList::preItemRemoved, this, [=](int index) {
+        connect(mList, &PEditableImageModifierList::preItemRemoved, this, [=](int index) {
             beginRemoveRows(QModelIndex(), index, index);
         });
-        connect(mList, &PImageTransformationList::postItemRemoved, this, [=]() {
+        connect(mList, &PEditableImageModifierList::postItemRemoved, this, [=]() {
             endRemoveRows();
         });
     }
@@ -107,7 +107,7 @@ void PImageTransformationModel::setList(PImageTransformationList *list)
     endResetModel();
 }
 
-void PImageTransformationModel::move(int from, int to)
+void PEditableImageModifierModel::move(int from, int to)
 {
         beginResetModel();
         //beginMoveRows(QModelIndex(), from, from, QModelIndex(), to);

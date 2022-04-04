@@ -1,20 +1,21 @@
-#ifndef PIMAGETRANSFORMATIONMODEL_H
-#define PIMAGETRANSFORMATIONMODEL_H
+#ifndef PEDITABLEIMAGEMODIFIERMODEL_H
+#define PEDITABLEIMAGEMODIFIERMODEL_H
 
 #include <QAbstractListModel>
 
-class PImageTransformationList;
+class PEditableImageModifierList;
 
-class PImageTransformationModel : public QAbstractListModel
+class PEditableImageModifierModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(PImageTransformationList *list READ list WRITE setList)
+    Q_PROPERTY(PEditableImageModifierList *list READ list WRITE setList)
 
  public:
-     explicit PImageTransformationModel(QObject *parent = nullptr);
+     explicit PEditableImageModifierModel(QObject *parent = nullptr);
 
      enum {
          TextRole = Qt::UserRole,
+         ModifierIndexRole
      };
 
      // Basic functionality:
@@ -30,14 +31,14 @@ class PImageTransformationModel : public QAbstractListModel
 
      virtual QHash<int, QByteArray> roleNames() const override;
 
-     PImageTransformationList *list() const;
-     void setList(PImageTransformationList *list);
+     PEditableImageModifierList *list() const;
+     void setList(PEditableImageModifierList *list);
 
      Q_INVOKABLE
      void move(int from, int to);
 
  private:
-     PImageTransformationList *mList;
+     PEditableImageModifierList *mList;
 };
 
-#endif // PIMAGETRANSFORMATIONMODEL_H
+#endif // PEDITABLEIMAGEMODIFIERMODEL_H
