@@ -14,7 +14,7 @@ Item {
 
         Text {
             anchors.centerIn: parent
-            text: "option"
+            text: model.name
         }
 
         MouseArea {

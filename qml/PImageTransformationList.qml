@@ -9,17 +9,17 @@ ColumnLayout {
         Layout.fillWidth: true
 
         ListView {
-            implicitWidth: 250
-            implicitHeight: 250
+            id: myList
+            implicitWidth: 100
+            implicitHeight: 400
             anchors.fill: parent
-            clip: true
 
             model: ImageTransformationModel {
                 list: imageTransformationList
             }
 
             delegate: RowLayout {
-                width: parent.width
+                width: imageTransformationList.width
 
                 TextField {
                     text: model.name
@@ -32,7 +32,9 @@ ColumnLayout {
                         drag.target: parent
 
                         onClicked: {
-                            imageTransformationList.doTransform(model.imageTransform)
+                            console.log(model.index)
+                            myList.currentItem.opacity = 1
+                            myList.currentIndex = model.index
                         }
                     }
                 }
@@ -43,17 +45,21 @@ ColumnLayout {
     RowLayout {
 
         Button {
+            text: qsTr("-")
+            Layout.fillWidth: true
+        }
+
+        Button {
             text: qsTr("+")
             onClicked: {
+                //imageTransformationListWindow.visible = true
                 imageTransformationList.appendItem()
-                imageTransformationListWindow.visible = true
             }
             Layout.fillWidth: true
         }
 
         Button {
-            text: qsTr("Remove completed")
-            onClicked: imageTransformationList.removeCompletedItems()
+            text: qsTr("Duplicate")
             Layout.fillWidth: true
         }
     }

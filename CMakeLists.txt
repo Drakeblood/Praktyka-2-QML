@@ -23,7 +23,9 @@ set(PROJECT_SOURCES
         include/PImageProvider.h src/PImageProvider.cpp
         include/PImageTransformationList.h src/PImageTransformationList.cpp
         include/PImageTransformationModel.h src/PImageTransformationModel.cpp
-        include/PImageTransform.h src/PImageTransform.cpp
+        include/ImageTransforms/PImageTransformBase.h src/ImageTransforms/PImageTransformBase.cpp
+        include/ImageTransforms/PFlipHorizontallyImageTransform.h src/ImageTransforms/PFlipHorizontallyImageTransform.cpp
+        include/ImageTransforms/PRotateImageTransform.h src/ImageTransforms/PRotateImageTransform.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

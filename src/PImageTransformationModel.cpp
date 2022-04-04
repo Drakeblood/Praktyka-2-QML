@@ -27,11 +27,8 @@ QVariant PImageTransformationModel::data(const QModelIndex &index, int role) con
         const ImageTranformationOptionItem item = mList->items().at(index.row());
         switch (role)
         {
-        case NameRole:
-            return QVariant(item.name);
-
-        case ImageTransformRole:
-            return QVariant(item.index);
+        case TextRole:
+            return QVariant(item.text);
         }
     }
     return QVariant();
@@ -44,12 +41,8 @@ bool PImageTransformationModel::setData(const QModelIndex &index, const QVariant
         ImageTranformationOptionItem item = mList->items().at(index.row());
         switch (role)
         {
-        case NameRole:
-            item.name = value.toString();
-            break;
-
-        case ImageTransformRole:
-            //item.imageTransform = value.value<std::function<void()>>();
+        case TextRole:
+            item.text = value.toString();
             break;
         }
 
@@ -73,12 +66,12 @@ Qt::ItemFlags PImageTransformationModel::flags(const QModelIndex &index) const
 QHash<int, QByteArray> PImageTransformationModel::roleNames() const
 {
     QHash<int, QByteArray> names;
-    names[NameRole] = "name";
-    names[ImageTransformRole] = "imageTransform";
+    names[TextRole] = "text";
+    //names[IndexRole] = "index";
     return names;
 }
 
-PImageTransformationList *PImageTransformationModel::list() const
+PImageTransformationList* PImageTransformationModel::list() const
 {
     return mList;
 }
@@ -88,7 +81,9 @@ void PImageTransformationModel::setList(PImageTransformationList *list)
     beginResetModel();
 
     if (mList)
+    {
         mList->disconnect(this);
+    }
 
     mList = list;
 
@@ -110,4 +105,19 @@ void PImageTransformationModel::setList(PImageTransformationList *list)
     }
 
     endResetModel();
+}
+
+void PImageTransformationModel::move(int from, int to)
+{
+        beginResetModel();
+        //beginMoveRows(QModelIndex(), from, from, QModelIndex(), to);
+
+        auto mList = list();
+        if(mList)
+        {
+            mList->reorderItem(from, to);
+        }
+
+        //endMoveRows();
+        endResetModel();
 }

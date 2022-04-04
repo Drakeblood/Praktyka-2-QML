@@ -3,12 +3,10 @@
 
 #include <QObject>
 #include <QVector>
-#include <functional>
 
 struct ImageTranformationOptionItem
 {
-    QString name;
-    int index;
+    QString text;
 };
 
 class PImageTransformationList : public QObject
@@ -21,6 +19,8 @@ public:
 
     bool setItemAt(int index, const ImageTranformationOptionItem &item);
 
+    void reorderItem(int from, int to);
+
 signals:
     void preItemAppended();
     void postItemAppended();
@@ -30,6 +30,7 @@ signals:
 
 public slots:
     void doTransform(int index);
+    void appendItem();
 
 private:
     QVector<ImageTranformationOptionItem> mItems;

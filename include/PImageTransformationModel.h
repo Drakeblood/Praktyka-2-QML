@@ -14,8 +14,7 @@ class PImageTransformationModel : public QAbstractListModel
      explicit PImageTransformationModel(QObject *parent = nullptr);
 
      enum {
-         NameRole = Qt::UserRole,
-         ImageTransformRole
+         TextRole = Qt::UserRole,
      };
 
      // Basic functionality:
@@ -33,6 +32,9 @@ class PImageTransformationModel : public QAbstractListModel
 
      PImageTransformationList *list() const;
      void setList(PImageTransformationList *list);
+
+     Q_INVOKABLE
+     void move(int from, int to);
 
  private:
      PImageTransformationList *mList;

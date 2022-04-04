@@ -1,11 +1,13 @@
 #include "include/PImageTransformationList.h"
-#include "include/PImageTransform.h"
+#include "include/ImageTransforms/PImageTransformBase.h"
+
+#include "QDebug"
 
 PImageTransformationList::PImageTransformationList(QObject *parent)
     : QObject{parent}
 {
-    mItems.append({QStringLiteral("Flip Image"), 1});
-    mItems.append({QStringLiteral("Noise Image"), 2});
+    mItems.append({QStringLiteral("Flip Image")});
+    mItems.append({QStringLiteral("Noise Image")});
 }
 
 QVector<ImageTranformationOptionItem> PImageTransformationList::items() const
@@ -18,15 +20,29 @@ bool PImageTransformationList::setItemAt(int index, const ImageTranformationOpti
     if (index < 0 || index >= mItems.size())
         return false;
 
-    /*const ImageTranformationOptionItem &oldItem = mItems.at(index);
-    if (item.name == oldItem.name && item.imageTransform == oldItem.imageTransform)
-        return false;*/
+    const ImageTranformationOptionItem &oldItem = mItems.at(index);
+    if (item.text == oldItem.text)
+        return false;
 
     mItems[index] = item;
     return true;
 }
 
+void PImageTransformationList::reorderItem(int from, int to)
+{
+    mItems.move(from, to);
+}
+
 void PImageTransformationList::doTransform(int index)
 {
 
+}
+
+void PImageTransformationList::appendItem()
+{
+    emit preItemAppended();
+
+    mItems.append({QStringLiteral("Test Image")});
+
+    emit postItemAppended();
 }
