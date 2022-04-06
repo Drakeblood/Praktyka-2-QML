@@ -14,6 +14,8 @@ PImageProvider::PImageProvider()
 
 PImageProvider::~PImageProvider()
 {
+    qDebug() << "PImageProvider destroyed.";
+
     delete imageStreamer;
 }
 

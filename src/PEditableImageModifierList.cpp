@@ -12,7 +12,7 @@ PEditableImageModifierList::PEditableImageModifierList(QObject *parent)
 
 PEditableImageModifierList::~PEditableImageModifierList()
 {
-    qDebug() << objectName() << " destroyed.";
+    qDebug() << "PEditableImageModifierList destroyed.";
 }
 
 QVector<ImageModifierOptionItem> PEditableImageModifierList::items() const

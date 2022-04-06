@@ -27,6 +27,7 @@ private:
 
 public:
     explicit PImageModifierExecutor(QObject *parent = nullptr);
+    virtual ~PImageModifierExecutor();
 
     void setupExecutor(QVector<ImageModifierOptionItem>* _imageModifierOptionItems, QVector<PImageModifierBase*>* _modifierList, PImageStreamer* _imageStreamer);
 

@@ -2,6 +2,8 @@
 #include "include/ImageModifiers/PFlipHorizontallyImageModifier.h"
 #include "include/ImageModifiers/PRotateImageModifier.h"
 
+#include "QDebug"
+
 PImageModifierList::PImageModifierList(QObject *parent)
     : QObject{parent}
     , modifiers(
@@ -10,4 +12,9 @@ PImageModifierList::PImageModifierList(QObject *parent)
         })
 {
 
+}
+
+PImageModifierList::~PImageModifierList()
+{
+    qDebug() << "PImageModifierList destroyed.";
 }

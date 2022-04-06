@@ -16,6 +16,11 @@ PImageStreamer::PImageStreamer(QObject *parent)
 
 }
 
+PImageStreamer::~PImageStreamer()
+{
+    qDebug() << "PImageStreamer destroyed.";
+}
+
 void PImageStreamer::loadImage(const QString& imagePath, int index)
 {
 

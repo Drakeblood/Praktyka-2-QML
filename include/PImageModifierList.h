@@ -15,6 +15,7 @@ public:
 
 public:
     explicit PImageModifierList(QObject *parent = nullptr);
+    virtual ~PImageModifierList();
 };
 
 #endif // PIMAGEMODIFIERLIST_H

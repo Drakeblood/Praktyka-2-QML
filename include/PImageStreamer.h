@@ -24,6 +24,7 @@ private:
 
 public:
     explicit PImageStreamer(QObject *parent = nullptr);
+    virtual ~PImageStreamer();
 
     Q_INVOKABLE
     void loadImage(const QString& imagePath, int index);

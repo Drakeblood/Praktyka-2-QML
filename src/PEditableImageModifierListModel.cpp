@@ -1,11 +1,18 @@
 #include "include/PEditableImageModifierListModel.h"
 #include "include/PEditableImageModifierList.h"
 
+#include "QDebug"
+
 PEditableImageModifierListModel::PEditableImageModifierListModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
 
+}
+
+PEditableImageModifierListModel::~PEditableImageModifierListModel()
+{
+    qDebug() << "PEditableImageModifierListModel destroyed.";
 }
 
 int PEditableImageModifierListModel::rowCount(const QModelIndex &parent) const

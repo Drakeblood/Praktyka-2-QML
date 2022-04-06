@@ -21,6 +21,7 @@ public:
 
 public:
     explicit PEditableImageModifierListModel(QObject *parent = nullptr);
+    virtual ~PEditableImageModifierListModel();
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

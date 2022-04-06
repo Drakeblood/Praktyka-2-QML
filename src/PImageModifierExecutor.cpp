@@ -14,6 +14,11 @@ PImageModifierExecutor::PImageModifierExecutor(QObject *parent)
 
 }
 
+PImageModifierExecutor::~PImageModifierExecutor()
+{
+    qDebug() << "PImageModifierExecutor destroyed.";
+}
+
 void PImageModifierExecutor::setupExecutor(QVector<ImageModifierOptionItem> *_imageModifierOptionItems, QVector<PImageModifierBase *> *_modifierList, PImageStreamer* _imageStreamer)
 {
     imageModifierOptionItems = _imageModifierOptionItems;
@@ -27,7 +32,7 @@ void PImageModifierExecutor::setupExecutor(QVector<ImageModifierOptionItem> *_im
 
     for(int i = 0; i < count; i++)
     {
-        futureWatchers.push_back(new QFutureWatcher<void>());
+        futureWatchers.push_back(new QFutureWatcher<void>(this));
     }
 }
 

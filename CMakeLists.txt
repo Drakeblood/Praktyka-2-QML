@@ -25,7 +25,6 @@ set(PROJECT_SOURCES
         include/PImageModifierExecutor.h src/PImageModifierExecutor.cpp
 
         include/PImageModifierList.h src/PImageModifierList.cpp
-        include/PImageModifierListModel.h src/PImageModifierListModel.cpp
         include/PEditableImageModifierList.h src/PEditableImageModifierList.cpp
         include/PEditableImageModifierListModel.h src/PEditableImageModifierListModel.cpp
 
