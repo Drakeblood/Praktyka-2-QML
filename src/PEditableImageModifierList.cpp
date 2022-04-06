@@ -1,13 +1,18 @@
 #include "include/PEditableImageModifierList.h"
-#include "include/ImageModifiers/PImageModifierBase.h"
+#include "include/ImageModifiers/PFlipHorizontallyImageModifier.h"
+#include "include/ImageModifiers/PRotateImageModifier.h"
 
 #include "QDebug"
 
 PEditableImageModifierList::PEditableImageModifierList(QObject *parent)
     : QObject{parent}
 {
-    mItems.append({QStringLiteral("Flip Image")});
-    mItems.append({QStringLiteral("Noise Image")});
+
+}
+
+PEditableImageModifierList::~PEditableImageModifierList()
+{
+    qDebug() << objectName() << " destroyed.";
 }
 
 QVector<ImageModifierOptionItem> PEditableImageModifierList::items() const
@@ -33,16 +38,16 @@ void PEditableImageModifierList::reorderItem(int from, int to)
     mItems.move(from, to);
 }
 
-void PEditableImageModifierList::doTransform(int index)
+void PEditableImageModifierList::doTransform()
 {
 
 }
 
-void PEditableImageModifierList::appendItem()
+void PEditableImageModifierList::appendItem(QString _text, int _modifierIndex)
 {
     emit preItemAppended();
 
-    mItems.append({QStringLiteral("Test Image")});
+    mItems.append({_text, _modifierIndex});
 
     emit postItemAppended();
 }

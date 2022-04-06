@@ -8,7 +8,7 @@ class PFlipHorizontallyImageModifier : public PImageModifierBase
 public:
     PFlipHorizontallyImageModifier();
 
-    virtual void transform(QVariant args...) override;
+    virtual void transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams) override;
 };
 
 #endif // PFLIPHORIZONTALLYIMAGEMODIFIER_H

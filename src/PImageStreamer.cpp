@@ -18,7 +18,14 @@ PImageStreamer::PImageStreamer(QObject *parent)
 
 void PImageStreamer::loadImage(const QString& imagePath, int index)
 {
-    if(index < cvImageInstances.size())
+
+    std::string stdStrPath = imagePath.toStdString();
+    stdStrPath = stdStrPath.substr(8);
+
+    cvImageInstanceOriginal = cv::imread(stdStrPath);
+    resetCVImagesInstances();
+
+    /*if(index < cvImageInstances.size())
     {
         std::string stdStrPath = imagePath.toStdString();
         stdStrPath = stdStrPath.substr(8);
@@ -33,7 +40,7 @@ void PImageStreamer::loadImage(const QString& imagePath, int index)
     else
     {
         qDebug() << "Load image failed - not valid index.";
-    }
+    }*/
 }
 
 void PImageStreamer::convertCVMatToQImage(int index)
@@ -41,6 +48,7 @@ void PImageStreamer::convertCVMatToQImage(int index)
     if(index < cvImageInstances.size() && !cvImageInstances[index].empty())
     {
         auto cvImageInstance = cvImageInstances[index];
+
         qImageInstances[index] = QImage(
                     (uchar*) cvImageInstance.data,
                     cvImageInstance.cols,
@@ -52,6 +60,25 @@ void PImageStreamer::convertCVMatToQImage(int index)
     else
     {
         qDebug() << "Convert image failed.";
+    }
+}
+
+void PImageStreamer::updateQImages()
+{
+    qDebug() << "Update QImages called.";
+
+    for(int i = 0; i < imageCount; i++)
+    {
+        convertCVMatToQImage(i);
+    }
+    emit qImagesUpdated();
+}
+
+void PImageStreamer::resetCVImagesInstances()
+{
+    for(int i = 0; i < imageCount; i++)
+    {
+        cvImageInstances[i] = cvImageInstanceOriginal.clone();
     }
 }
 

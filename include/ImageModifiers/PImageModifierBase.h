@@ -4,15 +4,21 @@
 #include <QVariant>
 #include <QStringList>
 
-class PImageModifierBase
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/core/core.hpp"
+
+/** Base class for image modifiers */
+class PImageModifierBase : public QObject
 {
+    Q_OBJECT
 protected:
     QStringList paramNames;
 
 public:
     PImageModifierBase();
 
-    virtual void transform(QVariant args...) = 0;
+    virtual void transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams) = 0;
 
     const QStringList& getParamNames() const;
 };

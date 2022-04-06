@@ -25,6 +25,7 @@ Item {
     onContentItemChanged: {
         console.log("onContentItemChanged: " + this)
         contentItem.parent = contentItemWrapper;
+        imageModifierExecuter.executeModifiers();//TO DO refactor
     }
 
     Rectangle {

@@ -3,16 +3,18 @@
 
 #include <QObject>
 
-#include "include/PEditableImageModifierList.h"
+class PImageModifierBase;
 
+/** Class that store image modifier options */
 class PImageModifierList : public QObject
 {
     Q_OBJECT
+
+public:
+    QVector<PImageModifierBase*> modifiers;
+
 public:
     explicit PImageModifierList(QObject *parent = nullptr);
-
-private:
-    QVector<ImageModifierOptionItem> modifiers;
 };
 
 #endif // PIMAGEMODIFIERLIST_H

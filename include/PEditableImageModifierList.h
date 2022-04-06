@@ -4,17 +4,25 @@
 #include <QObject>
 #include <QVector>
 
+class PImageModifierBase;
+
 struct ImageModifierOptionItem
 {
     QString text;
     int modifierIndex;
 };
 
+/** Class that store chosen image modifier options */
 class PEditableImageModifierList : public QObject
 {
     Q_OBJECT
+
+public:
+    QVector<ImageModifierOptionItem> mItems;
+
 public:
     explicit PEditableImageModifierList(QObject *parent = nullptr);
+    virtual ~PEditableImageModifierList();
 
     QVector<ImageModifierOptionItem> items() const;
 
@@ -30,11 +38,8 @@ signals:
     void postItemRemoved();
 
 public slots:
-    void doTransform(int index);
-    void appendItem();
-
-private:
-    QVector<ImageModifierOptionItem> mItems;
+    void doTransform();
+    void appendItem(QString _text, int _modifierIndex);
 
 };
 

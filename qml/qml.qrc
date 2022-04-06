@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>PDraggableItem.qml</file>
         <file>PDraggableItemDropArea.qml</file>
+        <file>PImageModifierList.qml</file>
     </qresource>
 </RCC>

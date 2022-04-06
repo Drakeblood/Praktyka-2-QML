@@ -1,6 +1,8 @@
 #include "include/PImageStreamer.h"
 #include "include/PImageProvider.h"
-#include "include/PEditableImageModifierModel.h"
+#include "include/PImageModifierExecutor.h"
+#include "include/PImageModifierList.h"
+#include "include/PEditableImageModifierListModel.h"
 #include "include/PEditableImageModifierList.h"
 
 #include <QGuiApplication>
@@ -18,13 +20,14 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("somecompany.com");
     app.setApplicationName("Application");
 
-    //qmlRegisterType<PImageStreamer>("Praktyka.ImageStreamer", 1, 0, "ImageStreamer");
-    qmlRegisterType<PEditableImageModifierModel>("Praktyka.ImageModifiers", 1, 0, "EditableImageModifierModel");
+    qmlRegisterType<PEditableImageModifierListModel>("Praktyka.ImageModifiers", 1, 0, "EditableImageModifierListModel");
 
     qmlRegisterUncreatableType<PEditableImageModifierList>("Praktyka.ImageModifiers", 1, 0, "EditableImageModifierList",
     QStringLiteral("ToDoList should not be created in QML"));
 
     QQmlApplicationEngine engine;
+
+    PImageModifierList imageModifierList;
 
     PEditableImageModifierList editableImageModifierList;
     engine.rootContext()->setContextProperty(QStringLiteral("editableImageModifierList"), &editableImageModifierList);
@@ -32,6 +35,10 @@ int main(int argc, char *argv[])
     PImageProvider *imageProvider = new PImageProvider;
     engine.addImageProvider(QStringLiteral("imageProvider"), imageProvider);
     engine.rootContext()->setContextProperty(QStringLiteral("imageStreamer"), imageProvider->imageStreamer);
+
+    PImageModifierExecutor imageModifierExecutor;
+    imageModifierExecutor.setupExecutor(&(editableImageModifierList.mItems), &(imageModifierList.modifiers), imageProvider->imageStreamer);
+    engine.rootContext()->setContextProperty(QStringLiteral("imageModifierExecuter"), &imageModifierExecutor);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

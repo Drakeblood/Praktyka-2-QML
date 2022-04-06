@@ -19,15 +19,20 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 set(PROJECT_SOURCES
         src/main.cpp
         qml/qml.qrc
+
         include/PImageStreamer.h src/PImageStreamer.cpp
         include/PImageProvider.h src/PImageProvider.cpp
+        include/PImageModifierExecutor.h src/PImageModifierExecutor.cpp
+
+        include/PImageModifierList.h src/PImageModifierList.cpp
+        include/PImageModifierListModel.h src/PImageModifierListModel.cpp
         include/PEditableImageModifierList.h src/PEditableImageModifierList.cpp
-        include/PEditableImageModifierModel.h src/PEditableImageModifierModel.cpp
+        include/PEditableImageModifierListModel.h src/PEditableImageModifierListModel.cpp
+
         include/ImageModifiers/PImageModifierBase.h src/ImageModifiers/PImageModifierBase.cpp
         include/ImageModifiers/PFlipHorizontallyImageModifier.h src/ImageModifiers/PFlipHorizontallyImageModifier.cpp
         include/ImageModifiers/PRotateImageModifier.h src/ImageModifiers/PRotateImageModifier.cpp
-        include/PImageModifierList.h src/PImageModifierList.cpp
-        include/PImageModifierListModel.h src/PImageModifierListModel.cpp
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

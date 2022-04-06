@@ -1,14 +1,14 @@
-#include "include/PEditableImageModifierModel.h"
+#include "include/PEditableImageModifierListModel.h"
 #include "include/PEditableImageModifierList.h"
 
-PEditableImageModifierModel::PEditableImageModifierModel(QObject *parent)
+PEditableImageModifierListModel::PEditableImageModifierListModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
 
 }
 
-int PEditableImageModifierModel::rowCount(const QModelIndex &parent) const
+int PEditableImageModifierListModel::rowCount(const QModelIndex &parent) const
 {
     // For list models only the root node (an invalid parent) should return the list's size. For all
     // other (valid) parents, rowCount() should return 0 so that it does not become a tree model.
@@ -20,7 +20,7 @@ int PEditableImageModifierModel::rowCount(const QModelIndex &parent) const
     return 0;
 }
 
-QVariant PEditableImageModifierModel::data(const QModelIndex &index, int role) const
+QVariant PEditableImageModifierListModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid() && mList)
     {
@@ -34,7 +34,7 @@ QVariant PEditableImageModifierModel::data(const QModelIndex &index, int role) c
     return QVariant();
 }
 
-bool PEditableImageModifierModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool PEditableImageModifierListModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (mList)
     {
@@ -54,7 +54,7 @@ bool PEditableImageModifierModel::setData(const QModelIndex &index, const QVaria
     return false;
 }
 
-Qt::ItemFlags PEditableImageModifierModel::flags(const QModelIndex &index) const
+Qt::ItemFlags PEditableImageModifierListModel::flags(const QModelIndex &index) const
 {
     if (index.isValid())
     {
@@ -63,7 +63,7 @@ Qt::ItemFlags PEditableImageModifierModel::flags(const QModelIndex &index) const
     return Qt::NoItemFlags;
 }
 
-QHash<int, QByteArray> PEditableImageModifierModel::roleNames() const
+QHash<int, QByteArray> PEditableImageModifierListModel::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[TextRole] = "text";
@@ -71,12 +71,12 @@ QHash<int, QByteArray> PEditableImageModifierModel::roleNames() const
     return names;
 }
 
-PEditableImageModifierList* PEditableImageModifierModel::list() const
+PEditableImageModifierList* PEditableImageModifierListModel::list() const
 {
     return mList;
 }
 
-void PEditableImageModifierModel::setList(PEditableImageModifierList *list)
+void PEditableImageModifierListModel::setList(PEditableImageModifierList *list)
 {
     beginResetModel();
 
@@ -107,7 +107,7 @@ void PEditableImageModifierModel::setList(PEditableImageModifierList *list)
     endResetModel();
 }
 
-void PEditableImageModifierModel::move(int from, int to)
+void PEditableImageModifierListModel::move(int from, int to)
 {
         beginResetModel();
         //beginMoveRows(QModelIndex(), from, from, QModelIndex(), to);

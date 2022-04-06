@@ -8,7 +8,7 @@ class PRotateImageModifier : public PImageModifierBase
 public:
     PRotateImageModifier();
 
-    virtual void transform(QVariant args...) override;
+    virtual void transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams) override;
 };
 
 #endif // PROTATEIMAGEMODIFIER_H

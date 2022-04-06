@@ -4,7 +4,10 @@
 
 PImageModifierList::PImageModifierList(QObject *parent)
     : QObject{parent}
+    , modifiers(
+        {new PFlipHorizontallyImageModifier,
+         new PRotateImageModifier
+        })
 {
-    modifiers.append({"Flip Image Horizontally"});
-    modifiers.append({"Rotate Image"});
+
 }

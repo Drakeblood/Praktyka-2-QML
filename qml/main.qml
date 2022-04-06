@@ -12,90 +12,21 @@ Window {
     height: 600
     visible: true
     title: qsTr("Hello World")
+    color: "#F0E2E2"
 
-    //------------------------Image modyficators list window------------------------
+    //------------------------Image modifiers list window------------------------
     Window {
         id: imageModifierListWindow
-        width: 400
-        height: 300
+        width: 500
+        height: 400
         visible: false
 
-        ColumnLayout {
+        PImageModifierList {
             anchors.fill: parent
-            spacing: 0
-
-            Rectangle {
-                color: "lightblue"
-                height: 50
-                Layout.fillWidth: true
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Image modyficators"
-                }
-            }
-
-            ScrollView {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-
-                ListView {
-                    id: imageModifierListView
-                    model: EditableImageModifierModel {
-                        id: imageModifierModel
-                        list: editableImageModifierList
-                    }
-
-                    delegate: Item {
-                        Rectangle {
-                            height: imageModifierTextLabel.height * 2
-                            width: imageModifierListView.width
-                            color: "white"
-
-                            Text {
-                                id: imageModifierTextLabel
-                                anchors.centerIn: parent
-                                text: model.text
-                            }
-
-                            // Bottom line border
-                            Rectangle {
-                                anchors {
-                                    left: parent.left
-                                    right: parent.right
-                                    bottom: parent.bottom
-                                }
-                                height: 1
-                                color: "lightgrey"
-                            }
-                        }
-                    }
-                }
-            }
-
-            RowLayout {
-
-                Button {
-                    text: qsTr("-")
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: qsTr("+")
-                    onClicked: {
-                        editableImageModifierList.appendItem()
-                    }
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: qsTr("Duplicate")
-                    Layout.fillWidth: true
-                }
-            }
         }
     }
 
+    //------------------------Main window UI------------------------
     Row {
         id: rowContainer
         width: parent.width
@@ -103,7 +34,7 @@ Window {
         spacing: 4
 
         Rectangle {
-            color: "red";
+            color: "#333333";
             width: parent.width / 3
             height: parent.height
 
@@ -156,9 +87,10 @@ Window {
 
             }
         }
-        //------------------------Chosen image modyficators list------------------------
-        Item {
+        //------------------------Editable image modifiers list------------------------
+        Rectangle {
             id: mainContent
+            color: "#333333"
             width: parent.width / 3
             height: parent.height
 
@@ -173,7 +105,7 @@ Window {
 
                     Text {
                         anchors.centerIn: parent
-                        text: "Image modyficators"
+                        text: "Image modifiers"
                     }
                 }
 
@@ -183,8 +115,9 @@ Window {
 
                     ListView {
                         id: editableImageModifierListView
-                        model: EditableImageModifierModel {
-                            id: editableImageModifierModel
+
+                        model: EditableImageModifierListModel {
+                            id: editableImageModifierListModel
                             list: editableImageModifierList
                         }
 
@@ -216,7 +149,7 @@ Window {
 
                             onMoveItemRequested: {
                                 console.log("onMoveItemRequested: " + from + " -> " + to)
-                                editableImageModifierModel.move(from, to)
+                                editableImageModifierListModel.move(from, to)
                             }
                         }
                     }
@@ -246,8 +179,19 @@ Window {
         }
 
         //------------------------Live preview images------------------------
+
+        Connections {
+            target: imageStreamer
+
+            property int a: 22
+            function onQImagesUpdated() {
+                livePreviewImage1.source = "image://imageProvider/0" + a++;
+                livePreviewImage2.source = "image://imageProvider/1" + a++;
+            }
+        }
+
         Rectangle {
-            color: "yellow";
+            color: "#333333";
             width: parent.width / 3
             height: parent.height
 
