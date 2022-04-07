@@ -51,17 +51,24 @@ void PEditableImageModifierList::appendItem(QString _text, int _modifierIndex)
 
 void PEditableImageModifierList::removeItem(int itemIndex)
 {
-    emit preItemRemoved(itemIndex);
+    if(itemIndex >= 0 && itemIndex < mItems.size())
+    {
+        qDebug() << itemIndex;
+        emit preItemRemoved(itemIndex);
 
-    mItems.removeAt(itemIndex);
+        mItems.removeAt(itemIndex);
 
-    emit postItemRemoved();
-    emit listItemChanged();
+        emit postItemRemoved();
+        emit listItemChanged();
+    }
 }
 
 void PEditableImageModifierList::cloneItem(int itemIndex)
 {
-    auto &itemToClone = mItems[itemIndex];
+    if(itemIndex >= 0 && itemIndex < mItems.size())
+    {
+        auto &itemToClone = mItems[itemIndex];
 
-    appendItem(itemToClone.text, itemToClone.modifierIndex);
+        appendItem(itemToClone.text, itemToClone.modifierIndex);
+    }
 }

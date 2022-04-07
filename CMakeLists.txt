@@ -31,6 +31,7 @@ set(PROJECT_SOURCES
         include/ImageModifiers/PImageModifierBase.h src/ImageModifiers/PImageModifierBase.cpp
         include/ImageModifiers/PFlipHorizontallyImageModifier.h src/ImageModifiers/PFlipHorizontallyImageModifier.cpp
         include/ImageModifiers/PRotateImageModifier.h src/ImageModifiers/PRotateImageModifier.cpp
+        include/ImageModifiers/PGaussianBlurImageModifier.h src/ImageModifiers/PGaussianBlurImageModifier.cpp
 
 )
 

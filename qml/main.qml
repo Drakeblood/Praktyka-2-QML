@@ -65,12 +65,7 @@ Window {
                         console.log("You chose: " + fileUrl + " - Previous: " + loadedImage.source)
 
                         loadedImage.source = fileUrl
-
-                        imageStreamer.loadImage(fileUrl, 0)
-                        livePreviewImage1.source = "image://imageProvider/0" + fileUrl
-
-                        imageStreamer.loadImage(fileUrl, 1)
-                        livePreviewImage2.source = "image://imageProvider/1" + fileUrl
+                        imageStreamer.loadImage(fileUrl)
                     }
                     else
                     {
@@ -80,11 +75,6 @@ Window {
                 onRejected: {
                     console.log("Canceled")
                 }
-            }
-
-            Connections {
-                //target: imageProvider
-
             }
         }
         //------------------------Editable image modifiers list------------------------
@@ -197,10 +187,11 @@ Window {
         Connections {
             target: imageStreamer
 
-            property int a: 22 // TO DO: FIX
+            property bool flipFlop: true
             function onQImagesUpdated() {
-                livePreviewImage1.source = "image://imageProvider/0" + a++;
-                livePreviewImage2.source = "image://imageProvider/1" + a++;
+                livePreviewImage1.source = "image://imageProvider/0" + flipFlop;
+                livePreviewImage2.source = "image://imageProvider/1" + flipFlop;
+                flipFlop = !flipFlop;
             }
         }
 
@@ -209,11 +200,10 @@ Window {
             width: parent.width / 3
             height: parent.height
 
-            Image {
-                id: livePreviewImage1
+            Rectangle {
                 width: parent.width
                 height: parent.height / 3
-                anchors.bottom: parent.bottom
+                anchors.bottom: parent.top
             }
 
             Image {
@@ -222,6 +212,13 @@ Window {
                 height: parent.height / 3
                 anchors.bottom: livePreviewImage1.top
                 anchors.bottomMargin: 20
+            }
+
+            Image {
+                id: livePreviewImage1
+                width: parent.width
+                height: parent.height / 3
+                anchors.bottom: parent.bottom
             }
         }
     }

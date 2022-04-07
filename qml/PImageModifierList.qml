@@ -77,6 +77,7 @@ Rectangle {
                     //imageModifierListModel.append({text: "Flip Vertically", team: "Flip Image"})
                     imageModifierListModel.append({text: "Rotate Image"})
                     //imageModifierListModel.append({text: "Cellular", team: "Noise"})
+                    imageModifierListModel.append({text: "GaussianBlur"})
                 }
             }
         }

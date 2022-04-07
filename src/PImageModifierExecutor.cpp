@@ -39,23 +39,36 @@ void PImageModifierExecutor::setupExecutor(QVector<ImageModifierOptionItem> *_im
 
 void PImageModifierExecutor::executeModifiers()
 {
-    start();
-    qDebug() << "Modifiers executor started - execute count: " << ++executeCounter;
+    if(!imageStreamer->cvImageInstanceOriginal.empty())
+    {
+        start();
+        qDebug() << "Modifiers executor started - execute count: " << ++executeCounter;
+    }
+    else
+    {
+        qDebug() << "No image loaded";
+    }
 }
 
 void PImageModifierExecutor::run()
 {
-    imageStreamer->resetCVImagesInstances();
+    imageStreamer->resetCVImageInstances();
 
     for(int i = 0; i < imageStreamer->imageCount; i++)
     {
         futureWatchers[i]->setFuture(QtConcurrent::run(this, &PImageModifierExecutor::executeModifiers, i));
-        //futureWatchers[i]->waitForFinished();
+        futureWatchers[i]->waitForFinished();
     }
 }
 
 void PImageModifierExecutor::executeModifiers(int index)
 {
+    if(index >= (*modifierList).size())
+    {
+        qDebug() << "Not valid index - update modifiers array in PImageModifierList" << index;
+        return;
+    }
+
     for(int i = 0; i < imageModifierOptionItems->size(); i++)
     {
         qDebug() << "FutureWatcher " << index;

@@ -27,11 +27,11 @@ public:
     virtual ~PImageStreamer();
 
     Q_INVOKABLE
-    void loadImage(const QString& imagePath, int index);
+    void loadImage(const QString& imagePath);
 
     void convertCVMatToQImage(int index);
     void updateQImages();
-    void resetCVImagesInstances();
+    void resetCVImageInstances();
 
     QImage* getQImage(int index);
 

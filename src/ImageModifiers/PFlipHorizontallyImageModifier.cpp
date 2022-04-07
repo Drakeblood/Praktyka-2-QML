@@ -1,5 +1,4 @@
 #include "include/ImageModifiers/PFlipHorizontallyImageModifier.h"
-#include "QDebug"
 
 PFlipHorizontallyImageModifier::PFlipHorizontallyImageModifier()
 {
@@ -8,6 +7,7 @@ PFlipHorizontallyImageModifier::PFlipHorizontallyImageModifier()
 
 void PFlipHorizontallyImageModifier::transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams)
 {
-    qDebug() << "flip";
+    qDebug() << "Flip image modifier";
+
     cv::flip(*src, *dst, 1);
 }
