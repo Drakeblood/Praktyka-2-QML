@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     PImageModifierExecutor imageModifierExecutor;
     imageModifierExecutor.setupExecutor(&(editableImageModifierList.mItems), &(imageModifierList.modifiers), imageProvider->imageStreamer);
-    engine.rootContext()->setContextProperty(QStringLiteral("imageModifierExecuter"), &imageModifierExecutor);
+    engine.rootContext()->setContextProperty(QStringLiteral("imageModifierExecutor"), &imageModifierExecutor);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

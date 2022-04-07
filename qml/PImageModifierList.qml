@@ -64,7 +64,6 @@ Rectangle {
                             //drag.target: parent
 
                             onClicked: {
-                                console.log(model.index)
                                 imageModifierListView.currentItem.opacity = 1
                                 imageModifierListView.currentIndex = model.index
                                 imageModifierListView.currentItem.opacity = 0.7

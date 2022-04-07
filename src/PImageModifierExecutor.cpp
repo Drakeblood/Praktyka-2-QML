@@ -10,6 +10,7 @@
 
 PImageModifierExecutor::PImageModifierExecutor(QObject *parent)
     : QThread{parent}
+    , executeCounter(0)
 {
 
 }
@@ -39,7 +40,7 @@ void PImageModifierExecutor::setupExecutor(QVector<ImageModifierOptionItem> *_im
 void PImageModifierExecutor::executeModifiers()
 {
     start();
-    qDebug() << "Modifiers executor started";
+    qDebug() << "Modifiers executor started - execute count: " << ++executeCounter;
 }
 
 void PImageModifierExecutor::run()

@@ -37,9 +37,12 @@ signals:
     void preItemRemoved(int index);
     void postItemRemoved();
 
+    void listItemChanged();
+
 public slots:
-    void doTransform();
     void appendItem(QString _text, int _modifierIndex);
+    void removeItem(int itemIndex);
+    void cloneItem(int itemIndex);
 
 };
 

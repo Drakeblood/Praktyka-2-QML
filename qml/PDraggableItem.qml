@@ -25,7 +25,6 @@ Item {
     onContentItemChanged: {
         console.log("onContentItemChanged: " + this)
         contentItem.parent = contentItemWrapper;
-        imageModifierExecuter.executeModifiers();//TO DO refactor
     }
 
     Rectangle {
@@ -51,6 +50,11 @@ Item {
                     console.log("onReleased: " + this)
                     emitMoveItemRequested();
                 }
+            }
+            onClicked: {
+                editableImageModifierListView.currentItem.opacity = 1
+                editableImageModifierListView.currentIndex = model.index
+                editableImageModifierListView.currentItem.opacity = 0.7
             }
         }
     }

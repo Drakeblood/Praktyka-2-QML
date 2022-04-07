@@ -36,11 +36,7 @@ bool PEditableImageModifierList::setItemAt(int index, const ImageModifierOptionI
 void PEditableImageModifierList::reorderItem(int from, int to)
 {
     mItems.move(from, to);
-}
-
-void PEditableImageModifierList::doTransform()
-{
-
+    emit listItemChanged();
 }
 
 void PEditableImageModifierList::appendItem(QString _text, int _modifierIndex)
@@ -50,4 +46,22 @@ void PEditableImageModifierList::appendItem(QString _text, int _modifierIndex)
     mItems.append({_text, _modifierIndex});
 
     emit postItemAppended();
+    emit listItemChanged();
+}
+
+void PEditableImageModifierList::removeItem(int itemIndex)
+{
+    emit preItemRemoved(itemIndex);
+
+    mItems.removeAt(itemIndex);
+
+    emit postItemRemoved();
+    emit listItemChanged();
+}
+
+void PEditableImageModifierList::cloneItem(int itemIndex)
+{
+    auto &itemToClone = mItems[itemIndex];
+
+    appendItem(itemToClone.text, itemToClone.modifierIndex);
 }

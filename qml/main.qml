@@ -116,6 +116,14 @@ Window {
                     ListView {
                         id: editableImageModifierListView
 
+                        Connections {
+                            target: editableImageModifierList
+
+                            function onListItemChanged() {
+                                imageModifierExecutor.executeModifiers()
+                            }
+                        }
+
                         model: EditableImageModifierListModel {
                             id: editableImageModifierListModel
                             list: editableImageModifierList
@@ -160,19 +168,25 @@ Window {
                     Button {
                         text: qsTr("-")
                         Layout.fillWidth: true
+                        onClicked: {
+                            editableImageModifierList.removeItem(editableImageModifierListView.currentIndex);
+                        }
                     }
 
                     Button {
                         text: qsTr("+")
+                        Layout.fillWidth: true
                         onClicked: {
                             imageModifierListWindow.visible = true
                         }
-                        Layout.fillWidth: true
                     }
 
                     Button {
                         text: qsTr("Duplicate")
                         Layout.fillWidth: true
+                        onClicked: {
+                            editableImageModifierList.cloneItem(editableImageModifierListView.currentIndex);
+                        }
                     }
                 }
             }
@@ -183,7 +197,7 @@ Window {
         Connections {
             target: imageStreamer
 
-            property int a: 22
+            property int a: 22 // TO DO: FIX
             function onQImagesUpdated() {
                 livePreviewImage1.source = "image://imageProvider/0" + a++;
                 livePreviewImage2.source = "image://imageProvider/1" + a++;

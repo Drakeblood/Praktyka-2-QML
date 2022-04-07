@@ -25,6 +25,8 @@ private:
 
     QVector<QFutureWatcher<void>*> futureWatchers;
 
+    int executeCounter;
+
 public:
     explicit PImageModifierExecutor(QObject *parent = nullptr);
     virtual ~PImageModifierExecutor();
