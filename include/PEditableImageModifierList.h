@@ -1,16 +1,12 @@
 #ifndef PEDITABLEIMAGEMODIFIERLIST_H
 #define PEDITABLEIMAGEMODIFIERLIST_H
 
+#include "include/PImageModifierList.h"
+
 #include <QObject>
 #include <QVector>
 
 class PImageModifierBase;
-
-struct ImageModifierOptionItem
-{
-    QString text;
-    int modifierIndex;
-};
 
 /** Class that store chosen image modifier options */
 class PEditableImageModifierList : public QObject
@@ -18,17 +14,20 @@ class PEditableImageModifierList : public QObject
     Q_OBJECT
 
 public:
-    QVector<ImageModifierOptionItem> mItems;
+    QVector<PImageModifierBase*> mChosenModifiers;
+
+private:
+    static PImageModifierList modifierList;
 
 public:
     explicit PEditableImageModifierList(QObject *parent = nullptr);
     virtual ~PEditableImageModifierList();
 
-    QVector<ImageModifierOptionItem> items() const;
+    QVector<PImageModifierBase*> items() const;
 
-    bool setItemAt(int index, const ImageModifierOptionItem &item);
-
-    void reorderItem(int from, int to);
+    bool setModifierAt(int index, PImageModifierBase *modifier);
+    void reorderModifiers(int from, int to);
+    void appendModifier(const PImageModifierBase *imageModifier);
 
 signals:
     void preItemAppended();
@@ -40,9 +39,14 @@ signals:
     void listItemChanged();
 
 public slots:
-    void appendItem(QString _text, int _modifierIndex);
-    void removeItem(int itemIndex);
-    void cloneItem(int itemIndex);
+    void appendModifier(int modifierIndex);
+    void removeModifier(int modifierIndex);
+    void cloneModifier(int modifierIndex);
+
+    QStringList getModifierParamNames(int modifierIndex);
+    QList<QVariant> getModifierParams(int modifierIndex);
+
+    void setModifierParams(int modifierIndex);
 
 };
 

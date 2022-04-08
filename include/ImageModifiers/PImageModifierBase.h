@@ -14,14 +14,19 @@ class PImageModifierBase : public QObject
 {
     Q_OBJECT
 protected:
-    QStringList paramNames;
+    QString text;
+    QMap<QString, QVariant> paramsMap;
 
 public:
     PImageModifierBase();
+    virtual ~PImageModifierBase();
+    PImageModifierBase(const PImageModifierBase &pImageModifierBase);
 
-    virtual void transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams) = 0;
+    virtual PImageModifierBase* clone() const = 0;
+    virtual void transform(cv::Mat *src, cv::Mat *dst) = 0;
 
-    const QStringList& getParamNames() const;
+    QString getText() const;
+    const QMap<QString, QVariant>* getParamsMap() const;
 };
 
 #endif // PIMAGEMODIFIERBASE_H

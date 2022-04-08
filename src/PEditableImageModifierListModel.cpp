@@ -1,3 +1,4 @@
+#include "include/ImageModifiers/PImageModifierBase.h"
 #include "include/PEditableImageModifierListModel.h"
 #include "include/PEditableImageModifierList.h"
 
@@ -31,11 +32,11 @@ QVariant PEditableImageModifierListModel::data(const QModelIndex &index, int rol
 {
     if (index.isValid() && mList)
     {
-        const ImageModifierOptionItem item = mList->items().at(index.row());
+        const PImageModifierBase *item = mList->items().at(index.row());
         switch (role)
         {
         case TextRole:
-            return QVariant(item.text);
+            return QVariant(item->getText());
         }
     }
     return QVariant();
@@ -45,15 +46,13 @@ bool PEditableImageModifierListModel::setData(const QModelIndex &index, const QV
 {
     if (mList)
     {
-        ImageModifierOptionItem item = mList->items().at(index.row());
+        PImageModifierBase *item = mList->items().at(index.row());
         switch (role)
         {
-        case TextRole:
-            item.text = value.toString();
-            break;
+
         }
 
-        if (mList->setItemAt(index.row(), item)) {
+        if (mList->setModifierAt(index.row(), item)) {
             emit dataChanged(index, index, QVector<int>() << role);
             return true;
         }
@@ -122,7 +121,7 @@ void PEditableImageModifierListModel::move(int from, int to)
         auto mList = list();
         if(mList)
         {
-            mList->reorderItem(from, to);
+            mList->reorderModifiers(from, to);
         }
 
         //endMoveRows();

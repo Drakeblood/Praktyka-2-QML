@@ -18,5 +18,23 @@ PImageModifierList::PImageModifierList(QObject *parent)
 
 PImageModifierList::~PImageModifierList()
 {
+    for(int i = 0; i < modifiers.size(); i++)
+    {
+        delete modifiers[i];
+    }
     qDebug() << "PImageModifierList destroyed.";
 }
+
+PImageModifierBase* PImageModifierList::operator[](const int &index) const
+{
+    return modifiers[index];
+}
+
+/*const QStringList PImageModifierList::getModifierParamNames(int modifierIndex) const
+{
+    if(modifierIndex < modifiers.size())
+    {
+        return *(modifiers[modifierIndex]->getParamNames());
+    }
+    return QStringList();
+}*/

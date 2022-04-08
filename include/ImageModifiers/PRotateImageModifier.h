@@ -7,8 +7,11 @@ class PRotateImageModifier : public PImageModifierBase
 {
 public:
     PRotateImageModifier();
+    virtual ~PRotateImageModifier();
+    PRotateImageModifier(const PRotateImageModifier &pRotateImageModifier);
 
-    virtual void transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams) override;
+    virtual PImageModifierBase* clone() const override;
+    virtual void transform(cv::Mat *src, cv::Mat *dst) override;
 };
 
 #endif // PROTATEIMAGEMODIFIER_H

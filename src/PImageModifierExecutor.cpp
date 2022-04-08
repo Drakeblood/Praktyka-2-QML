@@ -20,10 +20,9 @@ PImageModifierExecutor::~PImageModifierExecutor()
     qDebug() << "PImageModifierExecutor destroyed.";
 }
 
-void PImageModifierExecutor::setupExecutor(QVector<ImageModifierOptionItem> *_imageModifierOptionItems, QVector<PImageModifierBase *> *_modifierList, PImageStreamer* _imageStreamer)
+void PImageModifierExecutor::setupExecutor(QVector<PImageModifierBase*>* _imageModifierOptionItems, PImageStreamer* _imageStreamer)
 {
     imageModifierOptionItems = _imageModifierOptionItems;
-    modifierList = _modifierList;
     imageStreamer = _imageStreamer;
 
     connect(this, &PImageModifierExecutor::finished, imageStreamer, &PImageStreamer::updateQImages);
@@ -63,20 +62,13 @@ void PImageModifierExecutor::run()
 
 void PImageModifierExecutor::executeModifiers(int index)
 {
-    if(index >= (*modifierList).size())
-    {
-        qDebug() << "Not valid index - update modifiers array in PImageModifierList" << index;
-        return;
-    }
-
     for(int i = 0; i < imageModifierOptionItems->size(); i++)
     {
         qDebug() << "FutureWatcher " << index;
 
-        (*modifierList)[(*imageModifierOptionItems)[i].modifierIndex]->transform(
+        (*imageModifierOptionItems)[i]->transform(
                     &(imageStreamer->cvImageInstances[index]),
-                    &(imageStreamer->cvImageInstances[index]),
-                    QStringList()
+                    &(imageStreamer->cvImageInstances[index])
                     );
     }
 }

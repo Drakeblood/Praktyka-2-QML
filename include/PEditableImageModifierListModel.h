@@ -15,8 +15,7 @@ private:
 
 public:
     enum {
-        TextRole = Qt::UserRole,
-        ModifierIndexRole
+        TextRole = Qt::UserRole
     };
 
 public:
@@ -37,6 +36,7 @@ public:
     virtual QHash<int, QByteArray> roleNames() const override;
 
     PEditableImageModifierList *list() const;
+
     void setList(PEditableImageModifierList *list);
 
     Q_INVOKABLE

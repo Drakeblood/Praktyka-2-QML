@@ -159,7 +159,7 @@ Window {
                         text: qsTr("-")
                         Layout.fillWidth: true
                         onClicked: {
-                            editableImageModifierList.removeItem(editableImageModifierListView.currentIndex);
+                            editableImageModifierList.removeModifier(editableImageModifierListView.currentIndex);
                         }
                     }
 
@@ -175,7 +175,7 @@ Window {
                         text: qsTr("Duplicate")
                         Layout.fillWidth: true
                         onClicked: {
-                            editableImageModifierList.cloneItem(editableImageModifierListView.currentIndex);
+                            editableImageModifierList.cloneModifier(editableImageModifierListView.currentIndex);
                         }
                     }
                 }
@@ -187,7 +187,7 @@ Window {
         Connections {
             target: imageStreamer
 
-            property bool flipFlop: true
+            property bool flipFlop: true //need different id each time
             function onQImagesUpdated() {
                 livePreviewImage1.source = "image://imageProvider/0" + flipFlop;
                 livePreviewImage2.source = "image://imageProvider/1" + flipFlop;
@@ -200,25 +200,57 @@ Window {
             width: parent.width / 3
             height: parent.height
 
-            Rectangle {
+            Column {
                 width: parent.width
-                height: parent.height / 3
-                anchors.bottom: parent.top
-            }
+                height: parent.height
+                spacing: 10
 
-            Image {
-                id: livePreviewImage2
-                width: parent.width
-                height: parent.height / 3
-                anchors.bottom: livePreviewImage1.top
-                anchors.bottomMargin: 20
-            }
+                Rectangle {
+                    id: parametersRectangle
+                    color: "#333333";
+                    width: parent.width
+                    height: parent.height / 3
+                    visible: false
 
-            Image {
-                id: livePreviewImage1
-                width: parent.width
-                height: parent.height / 3
-                anchors.bottom: parent.bottom
+                    Column {
+                        width: parent.width
+                        height: parent.height
+                        spacing: 10
+
+                        PParameter {
+
+                        }
+
+                        PParameter {
+
+                        }
+                    }
+
+                    Button {
+                        text: "Save"
+                        height: 30
+                        width: 70
+                        anchors.bottom: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.bottomMargin: 20
+
+                        onClicked: {
+                            //change parameters
+                        }
+                    }
+                }
+
+                Image {
+                    id: livePreviewImage2
+                    width: parent.width
+                    height: parent.height / 3
+                }
+
+                Image {
+                    id: livePreviewImage1
+                    width: parent.width
+                    height: parent.height / 3
+                }
             }
         }
     }

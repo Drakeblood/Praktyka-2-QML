@@ -7,8 +7,11 @@ class PFlipHorizontallyImageModifier : public PImageModifierBase
 {
 public:
     PFlipHorizontallyImageModifier();
+    virtual ~PFlipHorizontallyImageModifier();
+    PFlipHorizontallyImageModifier(const PFlipHorizontallyImageModifier &pRotateImageModifier);
 
-    virtual void transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams) override;
+    virtual PImageModifierBase* clone() const override;
+    virtual void transform(cv::Mat *src, cv::Mat *dst) override;
 };
 
 #endif // PFLIPHORIZONTALLYIMAGEMODIFIER_H

@@ -2,10 +2,28 @@
 
 PRotateImageModifier::PRotateImageModifier()
 {
-    paramNames.append({"Degree min", "Degree max"});
+    text = "Rotate Image";
+    paramsMap.insert("Degree min", 10);
+    paramsMap.insert("Degree max", 20);
 }
 
-void PRotateImageModifier::transform(cv::Mat *src, cv::Mat *dst, QStringList stringParams)
+PRotateImageModifier::~PRotateImageModifier()
+{
+    qDebug() << "PRotateImageModifier destroyed.";
+}
+
+PRotateImageModifier::PRotateImageModifier(const PRotateImageModifier &pRotateImageModifier)
+    : PImageModifierBase(pRotateImageModifier)
+{
+
+}
+
+PImageModifierBase* PRotateImageModifier::clone() const
+{
+    return new PRotateImageModifier(*this);
+}
+
+void PRotateImageModifier::transform(cv::Mat *src, cv::Mat *dst)
 {
     qDebug() << "Rotate image modifier";
 

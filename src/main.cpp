@@ -1,7 +1,6 @@
 #include "include/PImageStreamer.h"
 #include "include/PImageProvider.h"
 #include "include/PImageModifierExecutor.h"
-#include "include/PImageModifierList.h"
 #include "include/PEditableImageModifierListModel.h"
 #include "include/PEditableImageModifierList.h"
 
@@ -12,7 +11,7 @@
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     QGuiApplication app(argc, argv);
 
@@ -27,8 +26,6 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    PImageModifierList imageModifierList;
-
     PEditableImageModifierList editableImageModifierList;
     engine.rootContext()->setContextProperty(QStringLiteral("editableImageModifierList"), &editableImageModifierList);
 
@@ -37,7 +34,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("imageStreamer"), imageProvider->imageStreamer);
 
     PImageModifierExecutor imageModifierExecutor;
-    imageModifierExecutor.setupExecutor(&(editableImageModifierList.mItems), &(imageModifierList.modifiers), imageProvider->imageStreamer);
+    imageModifierExecutor.setupExecutor(&(editableImageModifierList.mChosenModifiers), imageProvider->imageStreamer);
     engine.rootContext()->setContextProperty(QStringLiteral("imageModifierExecutor"), &imageModifierExecutor);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

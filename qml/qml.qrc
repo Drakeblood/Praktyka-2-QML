@@ -4,5 +4,6 @@
         <file>PDraggableItem.qml</file>
         <file>PDraggableItemDropArea.qml</file>
         <file>PImageModifierList.qml</file>
+        <file>PParameter.qml</file>
     </qresource>
 </RCC>

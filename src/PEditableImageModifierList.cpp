@@ -4,6 +4,8 @@
 
 #include "QDebug"
 
+PImageModifierList PEditableImageModifierList::modifierList;
+
 PEditableImageModifierList::PEditableImageModifierList(QObject *parent)
     : QObject{parent}
 {
@@ -15,60 +17,97 @@ PEditableImageModifierList::~PEditableImageModifierList()
     qDebug() << "PEditableImageModifierList destroyed.";
 }
 
-QVector<ImageModifierOptionItem> PEditableImageModifierList::items() const
+QVector<PImageModifierBase*> PEditableImageModifierList::items() const
 {
-    return mItems;
+    return mChosenModifiers;
 }
 
-bool PEditableImageModifierList::setItemAt(int index, const ImageModifierOptionItem &item)
+bool PEditableImageModifierList::setModifierAt(int index, PImageModifierBase *item)
 {
-    if (index < 0 || index >= mItems.size())
+    if (index < 0 || index >= mChosenModifiers.size())
         return false;
 
-    const ImageModifierOptionItem &oldItem = mItems.at(index);
-    if (item.text == oldItem.text)
+    const PImageModifierBase *oldItem = mChosenModifiers.at(index);
+    if (item->getText() == oldItem->getText())
         return false;
 
-    mItems[index] = item;
+    mChosenModifiers[index] = item;
     return true;
 }
 
-void PEditableImageModifierList::reorderItem(int from, int to)
+void PEditableImageModifierList::reorderModifiers(int from, int to)
 {
-    mItems.move(from, to);
+    mChosenModifiers.move(from, to);
     emit listItemChanged();
 }
 
-void PEditableImageModifierList::appendItem(QString _text, int _modifierIndex)
+void PEditableImageModifierList::appendModifier(const PImageModifierBase *imageModifier)
 {
     emit preItemAppended();
 
-    mItems.append({_text, _modifierIndex});
+    mChosenModifiers.append(imageModifier->clone());
+    mChosenModifiers.last()->setParent(this);
 
     emit postItemAppended();
     emit listItemChanged();
 }
 
-void PEditableImageModifierList::removeItem(int itemIndex)
+void PEditableImageModifierList::appendModifier(int modifierIndex)
 {
-    if(itemIndex >= 0 && itemIndex < mItems.size())
+    emit preItemAppended();
+
+    mChosenModifiers.append({modifierList[modifierIndex]->clone()});
+    mChosenModifiers.last()->setParent(this);
+
+    emit postItemAppended();
+    emit listItemChanged();
+}
+
+void PEditableImageModifierList::removeModifier(int itemIndex)
+{
+    if(itemIndex >= 0 && itemIndex < mChosenModifiers.size())
     {
-        qDebug() << itemIndex;
         emit preItemRemoved(itemIndex);
 
-        mItems.removeAt(itemIndex);
+        delete mChosenModifiers[itemIndex];
+        mChosenModifiers.removeAt(itemIndex);
 
         emit postItemRemoved();
         emit listItemChanged();
     }
 }
 
-void PEditableImageModifierList::cloneItem(int itemIndex)
+void PEditableImageModifierList::cloneModifier(int itemIndex)
 {
-    if(itemIndex >= 0 && itemIndex < mItems.size())
+    if(itemIndex >= 0 && itemIndex < mChosenModifiers.size())
     {
-        auto &itemToClone = mItems[itemIndex];
+        auto *itemToClone = mChosenModifiers[itemIndex];
 
-        appendItem(itemToClone.text, itemToClone.modifierIndex);
+        appendModifier(itemToClone);
     }
+}
+
+QStringList PEditableImageModifierList::getModifierParamNames(int modifierIndex)
+{
+    if(modifierIndex >= 0 && modifierIndex < mChosenModifiers.size())
+    {
+        qDebug() << "getModifierParamNames - Modifier index: " << modifierIndex;
+        return QStringList(mChosenModifiers[modifierIndex]->getParamsMap()->keys());
+    }
+    return QStringList();
+}
+
+QList<QVariant> PEditableImageModifierList::getModifierParams(int modifierIndex)
+{
+    if(modifierIndex >= 0 && modifierIndex < mChosenModifiers.size())
+    {
+        qDebug() << "getModifierParams - Modifier index: " << modifierIndex;
+        return mChosenModifiers[modifierIndex]->getParamsMap()->values();
+    }
+    return QList<QVariant>();
+}
+
+void PEditableImageModifierList::setModifierParams(int modifierIndex)
+{
+
 }

@@ -10,12 +10,17 @@ class PImageModifierList : public QObject
 {
     Q_OBJECT
 
-public:
+private:
     QVector<PImageModifierBase*> modifiers;
 
 public:
     explicit PImageModifierList(QObject *parent = nullptr);
     virtual ~PImageModifierList();
+
+    PImageModifierBase* operator[](const int &index) const;
+
+    //Q_INVOKABLE
+    //const QStringList getModifierParamNames(int modifierIndex) const;
 };
 
 #endif // PIMAGEMODIFIERLIST_H

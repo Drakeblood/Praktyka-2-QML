@@ -1,10 +1,10 @@
 #ifndef PIMAGESTREAMER_H
 #define PIMAGESTREAMER_H
 
+#include "include/PImageModifierExecutor.h"
+
 #include <QObject>
 #include <QImage>
-
-#include "include/PImageModifierExecutor.h"
 
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
