@@ -33,12 +33,14 @@ public:
     void updateQImages();
     void resetCVImageInstances();
 
+    const cv::Mat* getCVImageInstanceOriginal() const;
+    QVector<cv::Mat>* getCVImageInstances();
     QImage* getQImage(int index);
 
 signals:
     void qImagesUpdated();
 
-    friend class PImageModifierExecutor;
+    //friend class PImageModifierExecutor;
 
 };
 

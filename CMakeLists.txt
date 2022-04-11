@@ -22,6 +22,7 @@ set(PROJECT_SOURCES
 
         include/PImageStreamer.h src/PImageStreamer.cpp
         include/PImageProvider.h src/PImageProvider.cpp
+        include/PImageSaver.h src/PImageSaver.cpp
         include/PImageModifierExecutor.h src/PImageModifierExecutor.cpp
 
         include/PImageModifierList.h src/PImageModifierList.cpp

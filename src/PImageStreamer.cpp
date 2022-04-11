@@ -80,6 +80,16 @@ void PImageStreamer::resetCVImageInstances()
     }
 }
 
+const cv::Mat* PImageStreamer::getCVImageInstanceOriginal() const
+{
+    return &cvImageInstanceOriginal;
+}
+
+QVector<cv::Mat>* PImageStreamer::getCVImageInstances()
+{
+    return &cvImageInstances;
+}
+
 QImage* PImageStreamer::getQImage(int index)
 {
     if(index < cvImageInstances.size())

@@ -20,14 +20,12 @@ PImageModifierExecutor::~PImageModifierExecutor()
     qDebug() << "PImageModifierExecutor destroyed.";
 }
 
-void PImageModifierExecutor::setupExecutor(QVector<PImageModifierBase*>* _imageModifierOptionItems, PImageStreamer* _imageStreamer)
+void PImageModifierExecutor::setupExecutor(QVector<PImageModifierBase*>* _imageModifierOptionItems, QVector<cv::Mat>* _cvImageInstances)
 {
     imageModifierOptionItems = _imageModifierOptionItems;
-    imageStreamer = _imageStreamer;
+    cvImageInstances = _cvImageInstances;
 
-    connect(this, &PImageModifierExecutor::finished, imageStreamer, &PImageStreamer::updateQImages);
-
-    int count = imageStreamer->imageCount;
+    int count = cvImageInstances->size();
     futureWatchers.reserve(count);
 
     for(int i = 0; i < count; i++)
@@ -38,8 +36,10 @@ void PImageModifierExecutor::setupExecutor(QVector<PImageModifierBase*>* _imageM
 
 void PImageModifierExecutor::executeModifiers()
 {
-    if(!imageStreamer->cvImageInstanceOriginal.empty())
+    if( !((*cvImageInstances)[0].empty()) )
     {
+        emit preExecuteModifiers();
+
         start();
         qDebug() << "Modifiers executor started - execute count: " << ++executeCounter;
     }
@@ -51,9 +51,7 @@ void PImageModifierExecutor::executeModifiers()
 
 void PImageModifierExecutor::run()
 {
-    imageStreamer->resetCVImageInstances();
-
-    for(int i = 0; i < imageStreamer->imageCount; i++)
+    for(int i = 0; i < futureWatchers.size(); i++)
     {
         futureWatchers[i]->setFuture(QtConcurrent::run(this, &PImageModifierExecutor::executeModifiers, i));
         futureWatchers[i]->waitForFinished();
@@ -67,8 +65,8 @@ void PImageModifierExecutor::executeModifiers(int index)
         qDebug() << "FutureWatcher " << index;
 
         (*imageModifierOptionItems)[i]->transform(
-                    &(imageStreamer->cvImageInstances[index]),
-                    &(imageStreamer->cvImageInstances[index])
+                    &((*cvImageInstances)[index]),
+                    &((*cvImageInstances)[index])
                     );
     }
 }

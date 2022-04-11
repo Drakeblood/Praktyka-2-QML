@@ -1,0 +1,46 @@
+#ifndef PIMAGESAVER_H
+#define PIMAGESAVER_H
+
+#include <QObject>
+
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/core/core.hpp"
+
+class PImageModifierExecutor;
+class PImageModifierBase;
+
+class PImageSaver : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(unsigned int saveCount READ saveCount WRITE setSaveCount)
+
+private:
+    PImageModifierExecutor *pImageModifierExecutor;
+
+    const cv::Mat *cvImageInstanceReference;
+    QVector<cv::Mat> cvImageInstances;
+
+    unsigned int mSaveCount;
+    unsigned int saveIndex;
+
+    bool isConnected;
+
+public:
+    explicit PImageSaver(QObject *parent = nullptr);
+    virtual ~PImageSaver();
+
+    void setCVImageInstanceReference(const cv::Mat* _cvImageInstanceReference);
+    void setupImageModifierExecutor(QVector<PImageModifierBase*> *_imageModifierOptionItems);
+
+public slots:
+    void saveImages();
+
+private:
+    unsigned int saveCount();
+    void setSaveCount(unsigned int newSaveCount);
+    void saveImage();
+
+};
+
+#endif // PIMAGESAVER_H

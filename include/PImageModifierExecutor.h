@@ -21,7 +21,7 @@ class PImageModifierExecutor : public QThread
 
 private:
     QVector<PImageModifierBase*>* imageModifierOptionItems;
-    PImageStreamer* imageStreamer;
+    QVector<cv::Mat>* cvImageInstances;
 
     QVector<QFutureWatcher<void>*> futureWatchers;
 
@@ -31,10 +31,13 @@ public:
     explicit PImageModifierExecutor(QObject *parent = nullptr);
     virtual ~PImageModifierExecutor();
 
-    void setupExecutor(QVector<PImageModifierBase*>* _imageModifierOptionItems, PImageStreamer* _imageStreamer);
+    void setupExecutor(QVector<PImageModifierBase*>* _imageModifierOptionItems, QVector<cv::Mat>* _cvImageInstances);
 
     Q_INVOKABLE
     void executeModifiers();
+
+signals:
+    void preExecuteModifiers();
 
 protected:
     void run();

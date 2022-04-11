@@ -38,12 +38,23 @@ Window {
             width: parent.width / 3
             height: parent.height
 
-            Button {
-                id: loadImageButton
-                text: qsTr("Load an image")
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    fileDialog.open()
+            Column {
+                Button {
+                    id: loadImageButton
+                    text: qsTr("Load an image")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: {
+                        fileDialog.open()
+                    }
+                }
+
+                Button {
+                    id: saveImagesButton
+                    text: qsTr("Save images")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: {
+                        imageSaver.saveImages()
+                    }
                 }
             }
 
@@ -110,7 +121,7 @@ Window {
                             target: editableImageModifierList
 
                             function onListItemChanged() {
-                                imageModifierExecutor.executeModifiers()
+                                livePreviewImageModifierExecutor.executeModifiers()
                             }
                         }
 
@@ -247,7 +258,7 @@ Window {
                                     values.push(inputTextFields[i].parameterValue);
                                 }
                                 editableImageModifierList.setModifierParams(editableImageModifierListView.currentIndex, values)
-                                imageModifierExecutor.executeModifiers()
+                                livePreviewImageModifierExecutor.executeModifiers()
                             }
                         }
                     }
