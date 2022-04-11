@@ -27,6 +27,11 @@ public:
 
     QString getText() const;
     const QMap<QString, QVariant>* getParamsMap() const;
+
+    void setParameter(QString paramKey, QVariant paramValue);
+
+    static double fRand(const double fMin, const double fMax);
+
 };
 
 #endif // PIMAGEMODIFIERBASE_H

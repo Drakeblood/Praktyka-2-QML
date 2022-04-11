@@ -46,7 +46,7 @@ public slots:
     QStringList getModifierParamNames(int modifierIndex);
     QList<QVariant> getModifierParams(int modifierIndex);
 
-    void setModifierParams(int modifierIndex);
+    void setModifierParams(int modifierIndex, QList<QVariant> paramValues);
 
 };
 

@@ -27,3 +27,14 @@ const QMap<QString, QVariant>* PImageModifierBase::getParamsMap() const
 {
     return &paramsMap;
 }
+
+void PImageModifierBase::setParameter(QString paramKey, QVariant paramValue)
+{
+    paramsMap[paramKey] = paramValue;
+}
+
+double PImageModifierBase::fRand(const double fMin, const double fMax)
+{
+    double f = (double)rand() / RAND_MAX;
+    return fMin + f * (fMax - fMin);
+}

@@ -107,7 +107,13 @@ QList<QVariant> PEditableImageModifierList::getModifierParams(int modifierIndex)
     return QList<QVariant>();
 }
 
-void PEditableImageModifierList::setModifierParams(int modifierIndex)
+void PEditableImageModifierList::setModifierParams(int modifierIndex, QList<QVariant> paramValue)
 {
-
+    qDebug() << "setModifierParams";
+    auto modifierKeys = mChosenModifiers[modifierIndex]->getParamsMap()->keys();
+    for(int i = 0; i < modifierKeys.length(); i++)
+    {
+        qDebug() << paramValue[i];
+        mChosenModifiers[modifierIndex]->setParameter(modifierKeys[i], paramValue[i]);
+    }
 }

@@ -29,12 +29,3 @@ PImageModifierBase* PImageModifierList::operator[](const int &index) const
 {
     return modifiers[index];
 }
-
-/*const QStringList PImageModifierList::getModifierParamNames(int modifierIndex) const
-{
-    if(modifierIndex < modifiers.size())
-    {
-        return *(modifiers[modifierIndex]->getParamNames());
-    }
-    return QStringList();
-}*/

@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<PEditableImageModifierListModel>("Praktyka.ImageModifiers", 1, 0, "EditableImageModifierListModel");
 
     qmlRegisterUncreatableType<PEditableImageModifierList>("Praktyka.ImageModifiers", 1, 0, "EditableImageModifierList",
-    QStringLiteral("ToDoList should not be created in QML"));
+    QStringLiteral("EditableImageModifierList should not be created in QML"));
 
     QQmlApplicationEngine engine;
 

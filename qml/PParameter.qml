@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 
 Item {
     property string parameterHeader: "Parameter"
-    property double parameterValue: 0
+    property string parameterValue: "0"
 
     width: parent.width
     height: 45
@@ -30,6 +30,10 @@ Item {
                 anchors.fill: parent
                 anchors.margins: 4
                 text: parameterValue
+                onTextChanged: {
+                    console.log("onTextChanged")
+                    parameterValue = text
+                }
             }
         }
     }

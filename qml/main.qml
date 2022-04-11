@@ -235,7 +235,20 @@ Window {
                         anchors.bottomMargin: 20
 
                         onClicked: {
-                            //change parameters
+                            let params = editableImageModifierList.getModifierParams(editableImageModifierListView.currentIndex)
+
+                            if(params.length > 0)
+                            {
+                                let inputTextFields = parametersRectangle.children[0].children;
+                                let values = [];
+
+                                for(let i = 0; i < params.length && i < inputTextFields.length; i++)
+                                {
+                                    values.push(inputTextFields[i].parameterValue);
+                                }
+                                editableImageModifierList.setModifierParams(editableImageModifierListView.currentIndex, values)
+                                imageModifierExecutor.executeModifiers()
+                            }
                         }
                     }
                 }

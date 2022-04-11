@@ -4,8 +4,8 @@
 PGaussianBlurImageModifier::PGaussianBlurImageModifier()
 {
     text = "Gaussian Blur";
-    paramsMap.insert("Width", 3);
-    paramsMap.insert("Height", 3);
+    paramsMap.insert("Width/Height min", 3);
+    paramsMap.insert("Width/Height max", 3);
 }
 
 PGaussianBlurImageModifier::~PGaussianBlurImageModifier()
@@ -28,5 +28,6 @@ void PGaussianBlurImageModifier::transform(cv::Mat *src, cv::Mat *dst)
 {
     qDebug() << "GaussianBlur image modifier";
 
-    cv::GaussianBlur(*src, *dst, cv::Size(5, 5), 0);
+    int size = fRand(paramsMap["Width/Height min"].toDouble(), paramsMap["Width/Height max"].toDouble());
+    cv::GaussianBlur(*src, *dst, cv::Size(size, size), 0);
 }

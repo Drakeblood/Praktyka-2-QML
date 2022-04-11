@@ -18,9 +18,6 @@ public:
     virtual ~PImageModifierList();
 
     PImageModifierBase* operator[](const int &index) const;
-
-    //Q_INVOKABLE
-    //const QStringList getModifierParamNames(int modifierIndex) const;
 };
 
 #endif // PIMAGEMODIFIERLIST_H
