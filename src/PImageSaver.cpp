@@ -52,25 +52,39 @@ void PImageSaver::saveImages()
     }
 }
 
-void PImageSaver::setSaveCount(unsigned int newSaveCount)
+void PImageSaver::setSaveCount(const QVariant &newSaveCount)
 {
-    if(mSaveCount != newSaveCount)
+    auto saveCountInt = newSaveCount.toInt();
+    if(mSaveCount != saveCountInt)
     {
-        mSaveCount = newSaveCount;
+        mSaveCount = saveCountInt;
     }
+}
+
+QString PImageSaver::saveLocation() const
+{
+    return mSaveLocation.c_str();
+}
+
+void PImageSaver::setSaveLocation(const QString &newSaveLocation)
+{
+    std::string stdStrPath = newSaveLocation.toStdString();
+    stdStrPath = stdStrPath.substr(8);
+
+    mSaveLocation = stdStrPath;
 }
 
 void PImageSaver::saveImage()
 {
-    std::string filename = "generated_image_";
-    filename += std::to_string(saveIndex);
-    filename += ".jpg";
+    std::string filepath = mSaveLocation + "/generated_image_";
+    filepath += std::to_string(saveIndex);
+    filepath += ".jpg";
 
-    cv::imwrite(filename, cvImageInstances[0]);
+    cv::imwrite(filepath, cvImageInstances[0]);
     qDebug() << "File saved";
 }
 
-unsigned int PImageSaver::saveCount()
+unsigned int PImageSaver::saveCount() const
 {
     return mSaveCount;
 }

@@ -36,6 +36,7 @@ signals:
     void preItemRemoved(int index);
     void postItemRemoved();
 
+    //calls execute modifiers function to update live preview images
     void listItemChanged();
 
 public slots:

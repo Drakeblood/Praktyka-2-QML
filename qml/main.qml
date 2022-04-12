@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import Qt.labs.platform 1.1
 import QtQuick.Dialogs 1.3
 import QtQuick.Layouts 1.3
 
@@ -39,12 +40,28 @@ Window {
             height: parent.height
 
             Column {
+                anchors.fill: parent
+                spacing: 7
+                anchors.topMargin: 20
+
                 Button {
                     id: loadImageButton
                     text: qsTr("Load an image")
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: {
-                        fileDialog.open()
+                        openFileDialog.open()
+                    }
+                }
+
+                PParameter {
+                    parameterHeader: "Image count"
+                    parameterValue: "5"
+
+                    onInputTextChanged: {
+                        if(parameterValue != "")
+                        {
+                            imageSaver.saveCount = parameterValue;
+                        }
                     }
                 }
 
@@ -53,7 +70,7 @@ Window {
                     text: qsTr("Save images")
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: {
-                        imageSaver.saveImages()
+                        saveFileDialog.open();
                     }
                 }
             }
@@ -66,12 +83,12 @@ Window {
             }
 
             FileDialog {
-                id: fileDialog
+                id: openFileDialog
                 title: "Please choose a file"
-                folder: shortcuts.desktop
+                //folder: shortcuts.desktop
                 nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
                 onAccepted: {
-                    if(loadedImage.source != fileUrl)
+                    if(loadedImage.source != openFileDialog.fileUrl)
                     {
                         console.log("You chose: " + fileUrl + " - Previous: " + loadedImage.source)
 
@@ -84,7 +101,21 @@ Window {
                     }
                 }
                 onRejected: {
-                    console.log("Canceled")
+                    console.log("Open image canceled")
+                }
+            }
+
+            FolderDialog {
+                id: saveFileDialog
+                title: "Please choose a location"
+                //currentFolder: shortcuts.desktop
+                onAccepted: {
+                    console.log("You chose: " + folder)
+                    imageSaver.saveLocation = folder
+                    imageSaver.saveImages()
+                }
+                onRejected: {
+                    console.log("Save images canceled")
                 }
             }
         }

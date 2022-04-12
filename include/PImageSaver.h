@@ -14,6 +14,7 @@ class PImageSaver : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(unsigned int saveCount READ saveCount WRITE setSaveCount)
+    Q_PROPERTY(QString saveLocation READ saveLocation WRITE setSaveLocation)
 
 private:
     PImageModifierExecutor *pImageModifierExecutor;
@@ -22,6 +23,8 @@ private:
     QVector<cv::Mat> cvImageInstances;
 
     unsigned int mSaveCount;
+    std::string mSaveLocation;
+
     unsigned int saveIndex;
 
     bool isConnected;
@@ -37,8 +40,12 @@ public slots:
     void saveImages();
 
 private:
-    unsigned int saveCount();
-    void setSaveCount(unsigned int newSaveCount);
+    unsigned int saveCount() const;
+    void setSaveCount(const QVariant &newSaveCount);
+
+    QString saveLocation() const;
+    void setSaveLocation(const QString &newSaveLocation);
+
     void saveImage();
 
 };

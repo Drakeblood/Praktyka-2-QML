@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 Item {
     property string parameterHeader: "Parameter"
     property string parameterValue: "0"
+    signal inputTextChanged;
 
     width: parent.width
     height: 45
@@ -33,6 +34,7 @@ Item {
                 onTextChanged: {
                     console.log("onTextChanged")
                     parameterValue = text
+                    inputTextChanged();
                 }
             }
         }
