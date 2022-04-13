@@ -9,7 +9,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/core/core.hpp"
 
-/** Base class for image modifiers */
+/** Base class for image modifiers. To add new modifier to list you need to update PImageModifierList (qml and cpp) */
 class PImageModifierBase : public QObject
 {
     Q_OBJECT

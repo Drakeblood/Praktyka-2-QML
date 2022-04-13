@@ -75,7 +75,9 @@ Rectangle {
                 Component.onCompleted: {
                     imageModifierListModel.append({text: "Flip Horizontally"})
                     imageModifierListModel.append({text: "Rotate Image"})
-                    imageModifierListModel.append({text: "GaussianBlur"})
+                    imageModifierListModel.append({text: "Gaussian Blur"})
+                    imageModifierListModel.append({text: "Contrast"})
+                    imageModifierListModel.append({text: "Brightness"})
                 }
             }
         }

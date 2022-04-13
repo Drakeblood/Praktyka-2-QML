@@ -2,6 +2,8 @@
 #include "include/ImageModifiers/PFlipHorizontallyImageModifier.h"
 #include "include/ImageModifiers/PRotateImageModifier.h"
 #include "include/ImageModifiers/PGaussianBlurImageModifier.h"
+#include "include/ImageModifiers/PContrastImageModifier.h"
+#include "include/ImageModifiers/PBrightnessImageModifier.h"
 
 #include "QDebug"
 
@@ -10,7 +12,9 @@ PImageModifierList::PImageModifierList(QObject *parent)
     , modifiers(
         {new PFlipHorizontallyImageModifier,
          new PRotateImageModifier,
-         new PGaussianBlurImageModifier
+         new PGaussianBlurImageModifier,
+         new PContrastImageModifier,
+         new PBrightnessImageModifier
         })
 {
 

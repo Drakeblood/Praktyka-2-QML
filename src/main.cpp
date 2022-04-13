@@ -2,6 +2,7 @@
 #include "include/PImageProvider.h"
 #include "include/PImageSaver.h"
 #include "include/PImageModifierExecutor.h"
+#include "include/PImgurUploader.h"
 #include "include/PEditableImageModifierListModel.h"
 #include "include/PEditableImageModifierList.h"
 
@@ -49,6 +50,10 @@ int main(int argc, char *argv[])
     imageSaver.setCVImageInstanceReference(imageProvider->imageStreamer->getCVImageInstanceOriginal());
     imageSaver.setupImageModifierExecutor(&(editableImageModifierList.mChosenModifiers));
     engine.rootContext()->setContextProperty(QStringLiteral("imageSaver"), &imageSaver);
+
+    PImgurUploader imgurUploader;
+    imgurUploader.imageToUpload = imageProvider->imageStreamer->getQImage(0);
+    engine.rootContext()->setContextProperty(QStringLiteral("imgurUploader"), &imgurUploader);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

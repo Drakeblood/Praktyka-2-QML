@@ -29,5 +29,9 @@ void PGaussianBlurImageModifier::transform(cv::Mat *src, cv::Mat *dst)
     qDebug() << "GaussianBlur image modifier";
 
     int size = fRand(paramsMap["Width/Height min"].toDouble(), paramsMap["Width/Height max"].toDouble());
+    if(size % 2 == 0)
+    {
+        size++;
+    }
     cv::GaussianBlur(*src, *dst, cv::Size(size, size), 0);
 }

@@ -65,12 +65,40 @@ Window {
                     }
                 }
 
+                TextEdit {
+                    id: imgurLinkTextEdit
+                    width: parent.width
+                    height: 15
+                    readOnly: true
+                    wrapMode: Text.WordWrap
+                    selectByMouse: true
+                    color: "#F0E2E2"
+                    text: ""
+
+                    Connections {
+                        target: imgurUploader
+
+                        function onUploadedImageUrlChanged(){
+                            imgurLinkTextEdit.text = imgurUploader.uploadedImageUrl
+                        }
+                    }
+                }
+
                 Button {
                     id: saveImagesButton
                     text: qsTr("Save images")
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: {
                         saveFileDialog.open();
+                    }
+                }
+
+                Button {
+                    id: uploadToImgurButton
+                    text: qsTr("Upload to imgur")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: {
+                        imgurUploader.upload("test", "ttest")
                     }
                 }
             }
@@ -85,7 +113,7 @@ Window {
             FileDialog {
                 id: openFileDialog
                 title: "Please choose a file"
-                //folder: shortcuts.desktop
+                folder: shortcuts.desktop
                 nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
                 onAccepted: {
                     if(loadedImage.source != openFileDialog.fileUrl)
@@ -108,7 +136,7 @@ Window {
             FolderDialog {
                 id: saveFileDialog
                 title: "Please choose a location"
-                //currentFolder: shortcuts.desktop
+                currentFolder: openFileDialog.shortcuts.desktop
                 onAccepted: {
                     console.log("You chose: " + folder)
                     imageSaver.saveLocation = folder

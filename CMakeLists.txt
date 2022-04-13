@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Xml REQUIRED)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
@@ -24,6 +24,7 @@ set(PROJECT_SOURCES
         include/PImageProvider.h src/PImageProvider.cpp
         include/PImageSaver.h src/PImageSaver.cpp
         include/PImageModifierExecutor.h src/PImageModifierExecutor.cpp
+        include/PImgurUploader.h src/PImgurUploader.cpp
 
         include/PImageModifierList.h src/PImageModifierList.cpp
         include/PEditableImageModifierList.h src/PEditableImageModifierList.cpp
@@ -33,7 +34,8 @@ set(PROJECT_SOURCES
         include/ImageModifiers/PFlipHorizontallyImageModifier.h src/ImageModifiers/PFlipHorizontallyImageModifier.cpp
         include/ImageModifiers/PRotateImageModifier.h src/ImageModifiers/PRotateImageModifier.cpp
         include/ImageModifiers/PGaussianBlurImageModifier.h src/ImageModifiers/PGaussianBlurImageModifier.cpp
-
+        include/ImageModifiers/PContrastImageModifier.h src/ImageModifiers/PContrastImageModifier.cpp
+        include/ImageModifiers/PBrightnessImageModifier.h src/ImageModifiers/PBrightnessImageModifier.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -62,7 +64,7 @@ endif()
 target_compile_definitions(Praktyka-2-QML
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(Praktyka-2-QML
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Xml)
 
 target_link_libraries(Praktyka-2-QML PRIVATE ${OpenCV_LIBS})
 
