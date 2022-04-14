@@ -4,6 +4,7 @@
 #include "include/ImageModifiers/PGaussianBlurImageModifier.h"
 #include "include/ImageModifiers/PContrastImageModifier.h"
 #include "include/ImageModifiers/PBrightnessImageModifier.h"
+#include "include/ImageModifiers/PGaussianNoiseImageModifier.h"
 
 #include "QDebug"
 
@@ -14,7 +15,8 @@ PImageModifierList::PImageModifierList(QObject *parent)
          new PRotateImageModifier,
          new PGaussianBlurImageModifier,
          new PContrastImageModifier,
-         new PBrightnessImageModifier
+         new PBrightnessImageModifier,
+         new PGaussianNoiseImageModifier
         })
 {
 

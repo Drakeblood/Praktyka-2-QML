@@ -26,7 +26,7 @@ PImageModifierBase* PGaussianBlurImageModifier::clone() const
 
 void PGaussianBlurImageModifier::transform(cv::Mat *src, cv::Mat *dst)
 {
-    qDebug() << "GaussianBlur image modifier";
+    qDebug() << "Gaussian Blur image modifier";
 
     int size = fRand(paramsMap["Width/Height min"].toDouble(), paramsMap["Width/Height max"].toDouble());
     if(size % 2 == 0)

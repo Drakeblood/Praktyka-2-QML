@@ -78,6 +78,7 @@ Rectangle {
                     imageModifierListModel.append({text: "Gaussian Blur"})
                     imageModifierListModel.append({text: "Contrast"})
                     imageModifierListModel.append({text: "Brightness"})
+                    imageModifierListModel.append({text: "Gaussian Noise"})
                 }
             }
         }

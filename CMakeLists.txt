@@ -36,6 +36,7 @@ set(PROJECT_SOURCES
         include/ImageModifiers/PGaussianBlurImageModifier.h src/ImageModifiers/PGaussianBlurImageModifier.cpp
         include/ImageModifiers/PContrastImageModifier.h src/ImageModifiers/PContrastImageModifier.cpp
         include/ImageModifiers/PBrightnessImageModifier.h src/ImageModifiers/PBrightnessImageModifier.cpp
+        include/ImageModifiers/PGaussianNoiseImageModifier.h src/ImageModifiers/PGaussianNoiseImageModifier.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
