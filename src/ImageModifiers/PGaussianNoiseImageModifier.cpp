@@ -9,7 +9,7 @@ PGaussianNoiseImageModifier::PGaussianNoiseImageModifier()
 
 PGaussianNoiseImageModifier::~PGaussianNoiseImageModifier()
 {
-    qDebug() << "PGaussianBlurImageModifier destroyed.";
+    qDebug() << "PGaussianNoiseImageModifier destroyed.";
 }
 
 PGaussianNoiseImageModifier::PGaussianNoiseImageModifier(const PGaussianNoiseImageModifier &pGaussianNoiseImageModifier)
@@ -27,7 +27,7 @@ void PGaussianNoiseImageModifier::transform(cv::Mat *src, cv::Mat *dst)
 {
     qDebug() << "Gaussian Noise image modifier";
 
-    int size = fRand(paramsMap["Min"].toDouble(), paramsMap["Max"].toDouble());
+    double size = fRand(paramsMap["Min"].toDouble(), paramsMap["Max"].toDouble());
     cv::Mat noise(src->size(),src->type());
     cv::randn(noise, size, size);
     *dst += noise;

@@ -1,7 +1,5 @@
 #include "include/ImageModifiers/PRotateImageModifier.h"
 
-#include <random>
-
 PRotateImageModifier::PRotateImageModifier()
 {
     text = "Rotate Image";

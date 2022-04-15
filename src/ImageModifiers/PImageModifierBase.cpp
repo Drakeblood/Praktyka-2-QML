@@ -38,3 +38,12 @@ double PImageModifierBase::fRand(const double fMin, const double fMax)
     double f = (double)rand() / RAND_MAX;
     return fMin + f * (fMax - fMin);
 }
+
+bool PImageModifierBase::isOdd(int parameter)
+{
+    if(parameter % 2 == 0)
+    {
+        return false;
+    }
+    return true;
+}

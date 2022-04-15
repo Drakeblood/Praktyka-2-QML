@@ -182,6 +182,39 @@ Window {
                             function onListItemChanged() {
                                 livePreviewImageModifierExecutor.executeModifiers()
                             }
+
+                            function onPostItemRemoved() {
+                                parametersRectangle.visible = false
+                            }
+                        }
+
+                        function changeItemFocus(index) {
+                            if(index >= 0)
+                            {
+                                if(currentItem != null)
+                                {
+                                    editableImageModifierListView.currentItem.opacity = 1
+                                }
+                                editableImageModifierListView.currentIndex = index
+                                editableImageModifierListView.currentItem.opacity = 0.7
+
+                                let paramNames = editableImageModifierList.getModifierParamNames(editableImageModifierListView.currentIndex)
+                                let params = editableImageModifierList.getModifierParams(editableImageModifierListView.currentIndex)
+
+                                if(paramNames.length > 0 && params.length > 0)
+                                {
+                                    let inputTextFields = parametersRectangle.children[0].children;
+
+                                    for(let i = 0; i < paramNames.length && i < params.length && i < inputTextFields.length; i++)
+                                    {
+                                        inputTextFields[i].parameterHeader = paramNames[i]
+                                        inputTextFields[i].parameterValue = params[i]
+                                    }
+                                    parametersRectangle.visible = true
+                                    return
+                                }
+                            }
+                            parametersRectangle.visible = false
                         }
 
                         model: EditableImageModifierListModel {

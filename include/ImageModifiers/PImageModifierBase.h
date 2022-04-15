@@ -31,6 +31,7 @@ public:
     void setParameter(QString paramKey, QVariant paramValue);
 
     static double fRand(const double fMin, const double fMax);
+    static bool isOdd(int parameter);
 
 };
 

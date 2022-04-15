@@ -28,10 +28,10 @@ void PGaussianBlurImageModifier::transform(cv::Mat *src, cv::Mat *dst)
 {
     qDebug() << "Gaussian Blur image modifier";
 
-    int size = fRand(paramsMap["Width/Height min"].toDouble(), paramsMap["Width/Height max"].toDouble());
-    if(size % 2 == 0)
+    int size = fRand(paramsMap["Width/Height min"].toInt(), paramsMap["Width/Height max"].toInt());
+    if(!isOdd(size))
     {
-        size++;
+        size++;//only odd
     }
     cv::GaussianBlur(*src, *dst, cv::Size(size, size), 0);
 }

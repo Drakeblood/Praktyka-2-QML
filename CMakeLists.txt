@@ -37,6 +37,9 @@ set(PROJECT_SOURCES
         include/ImageModifiers/PContrastImageModifier.h src/ImageModifiers/PContrastImageModifier.cpp
         include/ImageModifiers/PBrightnessImageModifier.h src/ImageModifiers/PBrightnessImageModifier.cpp
         include/ImageModifiers/PGaussianNoiseImageModifier.h src/ImageModifiers/PGaussianNoiseImageModifier.cpp
+        include/ImageModifiers/PPixelateImageModifier.h src/ImageModifiers/PPixelateImageModifier.cpp
+        include/ImageModifiers/PSepiaImageModifier.h src/ImageModifiers/PSepiaImageModifier.cpp
+        include/ImageModifiers/PDuoToneImageModifier.h src/ImageModifiers/PDuoToneImageModifier.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

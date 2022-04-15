@@ -79,6 +79,9 @@ Rectangle {
                     imageModifierListModel.append({text: "Contrast"})
                     imageModifierListModel.append({text: "Brightness"})
                     imageModifierListModel.append({text: "Gaussian Noise"})
+                    imageModifierListModel.append({text: "Pixelate Image"})
+                    imageModifierListModel.append({text: "Sepia"})
+                    imageModifierListModel.append({text: "Duo-Tone"})
                 }
             }
         }
